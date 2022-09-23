@@ -24,7 +24,7 @@ public static class SwaggerExtensions
                 
                 options.TagActionsByRelativePath();
                 
-                var xmlFilename = $"{Assembly.GetEntryAssembly().GetName().Name}.xml";
+                var xmlFilename = $"{Assembly.GetEntryAssembly()?.GetName().Name}.xml";
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
 
