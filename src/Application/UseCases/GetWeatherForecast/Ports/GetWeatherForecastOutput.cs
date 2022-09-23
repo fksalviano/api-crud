@@ -1,8 +1,19 @@
+using System.Collections;
 using Application.UseCases.GetWeatherForecast.Domain;
 
 namespace Application.UseCases.GetWeather.Ports;
 
-public record GetWeatherForecastOutput
-(
-    IEnumerable<WeatherForecast> WeatherForecasts
-);
+public class GetWeatherForecastOutput : IEnumerable<WeatherForecast>
+{
+
+    private readonly IEnumerable<WeatherForecast> _weatherForecasts;
+
+    public GetWeatherForecastOutput(IEnumerable<WeatherForecast> weatherForecasts) =>
+        _weatherForecasts = weatherForecasts;
+
+    public IEnumerator<WeatherForecast> GetEnumerator() =>
+        _weatherForecasts.GetEnumerator();
+
+    IEnumerator IEnumerable.GetEnumerator() =>
+        this.GetEnumerator();
+}
