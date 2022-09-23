@@ -6,8 +6,8 @@ Architecture implemented to isolate the Application Common Domain from each Use 
 
 ### Use Cases
 
-- **GetVested**: 
-    Responsible to get Vested Schedules based on CSV file mapped content and the input Target Date.
+- **GetWeatherForecast**: 
+    Sample use case based on the sample .net API.
     
 ### Worker
 
