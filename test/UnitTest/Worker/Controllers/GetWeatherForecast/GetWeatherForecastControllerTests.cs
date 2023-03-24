@@ -1,0 +1,56 @@
+using Application.UseCases.GetWeather.Ports;
+using Application.UseCases.GetWeatherForecast.Abstractions;
+using AutoFixture;
+using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using Moq.AutoMock;
+using Worker.Controllers.GetWeatherForecast;
+using static Microsoft.AspNetCore.Http.StatusCodes;
+
+namespace UnitTest.Worker.Controllers.GetWeatherForecast;
+
+public class GetWeatherForecastControllerTests
+{
+    private readonly GetWeatherForecastController _sut;
+    private readonly IGetWeatherForecastOutputPort _outputPort;
+    private readonly Mock<IGetWeatherForecastUseCase> _useCase;
+
+    private readonly AutoMocker _mocker = new();
+    private readonly Fixture _fixture = new();
+
+    public GetWeatherForecastControllerTests()
+    {
+        _useCase = _mocker.GetMock<IGetWeatherForecastUseCase>();
+        _sut = _mocker.CreateInstance<GetWeatherForecastController>();
+        _outputPort = (_sut as IGetWeatherForecastOutputPort);
+    }
+
+    [Fact]
+    public async Task ShouldGetWeatherForecastSuccessfully()
+    {
+        //Arrange
+        var expected = _fixture.Create<GetWeatherForecastOutput>();
+        _useCase.Setup(useCase => useCase.ExecuteAsync()).Callback(() =>_outputPort.Ok(expected));
+
+        //Act
+        var result = await _sut.GetWeatherForecast() as ObjectResult;
+
+        //Assert
+        result!.StatusCode.Should().Be(Status200OK);
+        result!.Value.Should().Be(expected);
+    }
+
+    [Fact]
+    public async Task ShouldGetWeatherForecastNotFound()
+    {
+        //Arrange
+        _useCase.Setup(useCase => useCase.ExecuteAsync()).Callback(() =>_outputPort.NotFound());
+
+        //Act
+        var result = await _sut.GetWeatherForecast() as StatusCodeResult;
+
+        //Assert
+        result!.StatusCode.Should().Be(Status404NotFound);
+    }
+}
