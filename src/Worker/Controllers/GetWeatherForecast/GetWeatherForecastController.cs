@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Worker.Controllers.GetWeatherForecast;
 
 [ApiController]
-[Route("weatherforecast")]
+[Route("WeatherForecast")]
 public class GetWeatherForecastController : ControllerBase, IGetWeatherForecastOutputPort
 {
     private readonly IGetWeatherForecastUseCase _useCase;
