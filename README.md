@@ -26,8 +26,8 @@ Need to install the follow:
 - Git:
     https://git-scm.com/downloads
 
-- Dotnet Core 6.0 SDK and Runtime:
-    https://dotnet.microsoft.com/en-us/download/dotnet/6.0
+- Dotnet Core 7.0 SDK and Runtime:
+    https://dotnet.microsoft.com/en-us/download/dotnet/7.0
     
 
 ## Getting Started
