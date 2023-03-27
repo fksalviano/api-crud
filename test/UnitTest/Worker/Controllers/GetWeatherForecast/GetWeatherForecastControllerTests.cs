@@ -53,4 +53,18 @@ public class GetWeatherForecastControllerTests
         //Assert
         result!.StatusCode.Should().Be(Status404NotFound);
     }
+
+    [Fact]
+    public async Task ShouldGetWeatherForecastError()
+    {
+        //Arrange
+        var message = _fixture.Create<string>();
+        _useCase.Setup(useCase => useCase.ExecuteAsync()).Callback(() =>_outputPort.Error(message));
+
+        //Act
+        var result = await _sut.GetWeatherForecast() as ObjectResult;
+
+        //Assert
+        result!.StatusCode.Should().Be(Status500InternalServerError);
+    }
 }

@@ -10,7 +10,7 @@ public class GetWeatherForecastController : ControllerBase, IGetWeatherForecastO
 {
     private readonly IGetWeatherForecastUseCase _useCase;
     private readonly ILogger<GetWeatherForecastController> _logger;
-    private IActionResult? _viewModel;
+    private IActionResult _viewModel = null!;
 
     public GetWeatherForecastController(IGetWeatherForecastUseCase useCase,
         ILogger<GetWeatherForecastController> logger)
@@ -32,7 +32,7 @@ public class GetWeatherForecastController : ControllerBase, IGetWeatherForecastO
     {
         await _useCase.ExecuteAsync();
 
-        return _viewModel!;
+        return _viewModel;
     }
 
     void IGetWeatherForecastOutputPort.Ok(GetWeatherForecastOutput output) =>
@@ -41,4 +41,6 @@ public class GetWeatherForecastController : ControllerBase, IGetWeatherForecastO
     void IGetWeatherForecastOutputPort.NotFound() =>
         _viewModel = NotFound();
 
+    void IGetWeatherForecastOutputPort.Error(string message) =>  
+        _viewModel = StatusCode(StatusCodes.Status500InternalServerError, message);
 }

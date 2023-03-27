@@ -5,7 +5,7 @@ namespace Application.UseCases.GetWeather;
 
 public class GetWeatherForecastUseCase : IGetWeatherForecastUseCase
 {
-    private IGetWeatherForecastOutputPort? _outputPort;
+    private IGetWeatherForecastOutputPort _outputPort = null!;
     private readonly IWeatherForecastRepository _repository;
 
     public void SetOutputPort(IGetWeatherForecastOutputPort outputPort) =>
@@ -20,12 +20,18 @@ public class GetWeatherForecastUseCase : IGetWeatherForecastUseCase
     {
         var forecasts = await _repository.GetWeatherForecasts();
 
+        if (forecasts == null)
+        {
+            _outputPort.Error("Error to Get Forecasts");
+            return;
+        }
+
         if (!forecasts.Any())
         {
-            _outputPort!.NotFound();
+            _outputPort.NotFound();
             return;
         }
         
-        _outputPort!.Ok(forecasts.ToOutput());
+        _outputPort.Ok(forecasts.ToOutput());
     }
 }

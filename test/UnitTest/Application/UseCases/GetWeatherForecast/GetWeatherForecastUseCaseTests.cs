@@ -24,7 +24,7 @@ public class GetWeatherForecastUseCaseTests
         _outputPort = _mocker.GetMock<IGetWeatherForecastOutputPort>();
 
         _sut = _mocker.CreateInstance<GetWeatherForecastUseCase>();
-        _sut.SetOutputPort(_outputPort.Object);        
+        _sut.SetOutputPort(_outputPort.Object);
     }
 
     [Fact]
@@ -43,6 +43,9 @@ public class GetWeatherForecastUseCaseTests
             Times.Once);
 
         _outputPort.Verify(outputPort => outputPort.NotFound(),
+            Times.Never);
+
+        _outputPort.Verify(outputPort => outputPort.Error(It.IsAny<string>()),
             Times.Never);
     }
 
@@ -65,6 +68,30 @@ public class GetWeatherForecastUseCaseTests
         //Assert
         _outputPort.Verify(outputPort => outputPort.NotFound(),
             Times.Once);
+
+        _outputPort.Verify(outputPort => outputPort.Ok(It.IsAny<GetWeatherForecastOutput>()),
+            Times.Never);
+
+        _outputPort.Verify(outputPort => outputPort.Error(It.IsAny<string>()),
+            Times.Never);
+    }
+
+    [Fact]
+    public async Task ShouldExecuteWithError()
+    {
+        //Arrange
+        var expected = (IEnumerable<WeatherForecast>) null!;
+        _repository.Setup(repo => repo.GetWeatherForecasts()).ReturnsAsync(expected);
+
+        //Act
+        await _sut.ExecuteAsync();
+
+        //Assert
+        _outputPort.Verify(outputPort => outputPort.Error(It.IsAny<string>()),
+            Times.Once);
+
+        _outputPort.Verify(outputPort => outputPort.NotFound(),
+            Times.Never);
 
         _outputPort.Verify(outputPort => outputPort.Ok(It.IsAny<GetWeatherForecastOutput>()),
             Times.Never);

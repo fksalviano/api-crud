@@ -4,5 +4,5 @@ namespace Application.UseCases.GetWeatherForecast.Abstractions;
 
 public interface IWeatherForecastRepository
 {
-    Task<IEnumerable<WeatherForecast>> GetWeatherForecasts();
+    Task<IEnumerable<WeatherForecast>?> GetWeatherForecasts();
 }

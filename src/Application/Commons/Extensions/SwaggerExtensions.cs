@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
@@ -6,6 +7,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Application.Commons.Extensions;
 
+[ExcludeFromCodeCoverage]
 public static class SwaggerExtensions
 {
     public static IServiceCollection AddSwagger(this IServiceCollection services, 
