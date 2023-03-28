@@ -32,6 +32,7 @@ public class GetWeatherForecastUseCase : IGetWeatherForecastUseCase
             return;
         }
         
-        _outputPort.Ok(forecasts.ToOutput());
+        var output = forecasts.ToOutput();
+        _outputPort.Ok(output);
     }
 }

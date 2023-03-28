@@ -6,9 +6,9 @@ Architecture implemented to isolate the Application Common Domain from each Use 
 
 ### Use Cases
 
-- **GetWeatherForecast**: 
-    Sample use case based on the sample .net API.
-    
+- **GetWeatherForecast**:
+    Sample use case based on the sample .net API WeatherForecast.
+
 ### Worker
 
 The API micro-service with the Controllers and endpoints.
@@ -16,6 +16,14 @@ The API micro-service with the Controllers and endpoints.
 ### Dependency Injection
 
 The project uses Dependence Injection to build the container services and uses self-installers to add each Use Case on the container independently.
+
+## Tests
+
+- **Unit Tests**:
+    Tests for each class and methods independently.
+
+- **Integration Tests**:
+    Tests for each endpoint call testing the integration of all classes and methods.
 
 ## Configuration
 
@@ -28,14 +36,14 @@ Need to install the follow:
 
 - Dotnet Core 7.0 SDK and Runtime:
     https://dotnet.microsoft.com/en-us/download/dotnet/7.0
-    
+
 
 ## Getting Started
 
 #### Clone the repository:
 
 ```bash
-git clone https://github.com/fksalviano/api-clean-vs.git 
+git clone https://github.com/fksalviano/api-clean-vs.git
 ```
 
 #### Go to the project directory
@@ -65,12 +73,12 @@ The project uses the following packages
 
 - FluentAssertions:
     https://www.nuget.org/packages/fluentassertions
-    
+
 - XUnit:
     https://www.nuget.org/packages/xunit
-    
+
 - AutoFixture:
     https://www.nuget.org/packages/autofixture
-    
+
 - Moq.AutoMock:
     https://www.nuget.org/packages/moq.automock

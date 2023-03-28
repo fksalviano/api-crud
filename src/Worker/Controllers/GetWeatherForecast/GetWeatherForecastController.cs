@@ -36,11 +36,11 @@ public class GetWeatherForecastController : ControllerBase, IGetWeatherForecastO
     }
 
     void IGetWeatherForecastOutputPort.Ok(GetWeatherForecastOutput output) =>
-        _viewModel = Ok(output);
+        _viewModel = Ok(GetWeatherForecastResponse.Success(output));
 
     void IGetWeatherForecastOutputPort.NotFound() =>
         _viewModel = NotFound();
 
     void IGetWeatherForecastOutputPort.Error(string message) =>  
-        _viewModel = StatusCode(StatusCodes.Status500InternalServerError, message);
+        _viewModel = StatusCode(StatusCodes.Status500InternalServerError, GetWeatherForecastResponse.Error(message));
 }

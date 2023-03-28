@@ -30,15 +30,16 @@ public class GetWeatherForecastControllerTests
     public async Task ShouldGetWeatherForecastSuccessfully()
     {
         //Arrange
-        var expected = _fixture.Create<GetWeatherForecastOutput>();
-        _useCase.Setup(useCase => useCase.ExecuteAsync()).Callback(() =>_outputPort.Ok(expected));
+        var output = _fixture.Create<GetWeatherForecastOutput>();
+        var expected = GetWeatherForecastResponse.Success(output);
+        _useCase.Setup(useCase => useCase.ExecuteAsync()).Callback(() =>_outputPort.Ok(output));
 
         //Act
         var result = await _sut.GetWeatherForecast() as ObjectResult;
 
         //Assert
         result!.StatusCode.Should().Be(Status200OK);
-        result!.Value.Should().Be(expected);
+        result!.Value.Should().BeEquivalentTo(expected);
     }
 
     [Fact]
@@ -59,6 +60,7 @@ public class GetWeatherForecastControllerTests
     {
         //Arrange
         var message = _fixture.Create<string>();
+        var expected = GetWeatherForecastResponse.Error(message);
         _useCase.Setup(useCase => useCase.ExecuteAsync()).Callback(() =>_outputPort.Error(message));
 
         //Act
@@ -66,5 +68,6 @@ public class GetWeatherForecastControllerTests
 
         //Assert
         result!.StatusCode.Should().Be(Status500InternalServerError);
+        result!.Value.Should().BeEquivalentTo(expected);
     }
 }
