@@ -49,7 +49,7 @@ public class GetWeatherForecastControllerTests
         _useCase.Setup(useCase => useCase.ExecuteAsync()).Callback(() =>_outputPort.NotFound());
 
         //Act
-        var result = await _sut.GetWeatherForecast() as StatusCodeResult;
+        var result = await _sut.GetWeatherForecast() as ObjectResult;
 
         //Assert
         result!.StatusCode.Should().Be(Status404NotFound);

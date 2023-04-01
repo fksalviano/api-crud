@@ -39,7 +39,7 @@ public class GetWeatherForecastUseCaseTests
 
         //Assert
         _outputPort.Verify(outputPort =>
-            outputPort.Ok(It.Is<GetWeatherForecastOutput>(output => IsEquivalent(output.WeatherForecasts, expected))),
+            outputPort.Ok(It.Is<GetWeatherForecastOutput>(output => IsEquivalent(output, expected))),
             Times.Once);
 
         _outputPort.Verify(outputPort => outputPort.NotFound(),

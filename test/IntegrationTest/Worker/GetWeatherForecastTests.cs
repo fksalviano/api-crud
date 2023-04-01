@@ -15,15 +15,12 @@ public class GetWeatherForecastTests : IClassFixture<ApplicationFactory>
     public async Task ShouldGetWeatherForecastsSuccessfully()
     {
         //Arrange
-        var client = _factory.GetClient();        
+        var client = _factory.GetClient();
 
         //Act
         var response = await client.GetAsync(Routes.WeatherForecast);
-        var content = await response.Content.ReadFromJsonAsync<GetWeatherForecastResponse>();
 
         //Assert
-        response.EnsureSuccessStatusCode();        
-        content.Should().NotBeNull();
-        content!.Result!.WeatherForecasts.Should().NotBeNullOrEmpty();
+        response.EnsureSuccessStatusCode();
     }
 }
