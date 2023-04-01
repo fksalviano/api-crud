@@ -5,7 +5,7 @@ namespace Application.UseCases.GetWeatherForecast.Abstractions;
 
 public interface IGetWeatherForecastOutputPort
 {
-    void Ok(GetWeatherForecastOutput output);
-    
+    void Ok(GetWeatherForecastOutput output);    
     void NotFound();
+    void Error(string message);
 }
