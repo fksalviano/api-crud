@@ -3,7 +3,7 @@ using Application.UseCases.GetWeather.Ports;
 
 namespace Worker.Controllers.GetWeatherForecast;
 
-public class GetWeatherForecastResponse : BaseResponse<GetWeatherForecastOutput>
+public class GetWeatherForecastResponse : Response<GetWeatherForecastOutput>
 {
     
 }
