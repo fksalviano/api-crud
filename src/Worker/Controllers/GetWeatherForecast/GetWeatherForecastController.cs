@@ -26,7 +26,7 @@ public class GetWeatherForecastController : ControllerBase, IGetWeatherForecastO
     /// </summary>
     /// <returns></returns>
     [HttpGet(Name = "GetWeatherForecast")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetWeatherForecastOutput))]
+    [ProducesResponseType<GetWeatherForecastResponse>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetWeatherForecast()
     {
