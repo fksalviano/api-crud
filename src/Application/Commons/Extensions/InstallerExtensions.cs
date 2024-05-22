@@ -10,8 +10,8 @@ public static class InstallerExtensions
 {
     public static IServiceCollection InstallServices(this IServiceCollection services)
     {
-        var installersTypes = Assembly.GetExecutingAssembly().GetTypes()
-            .Where(type => typeof(IServiceInstaller).IsAssignableFrom(type) && type.IsClass);
+        var installersTypes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(assembly => assembly
+            .GetTypes().Where(type => typeof(IServiceInstaller).IsAssignableFrom(type) && type.IsClass));
 
         foreach (var type in installersTypes)
         {

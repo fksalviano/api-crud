@@ -1,6 +1,6 @@
 using System.Net.Http.Json;
 using FluentAssertions;
-using Worker.Controllers.GetWeatherForecast;
+using Worker.Endpoints.GetWeatherForecast;
 
 namespace IntegrationTest.Worker;
 

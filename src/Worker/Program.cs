@@ -1,12 +1,11 @@
+using Worker;
+
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services
-    .InstallServices()
-    .AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-builder.Services.AddSwagger("v1",
-    "API-Clean-VS", 
-    "Sample API with Clean Architecture and Vertical Slice");
+builder.Services.InstallServices();
 
 var app = builder.Build();
 
@@ -17,8 +16,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseAuthorization();
 
-app.MapControllers();
+app.MapEndpoints();
 
 app.Run();
