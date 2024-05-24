@@ -1,13 +1,11 @@
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(o => 
-    o.SwaggerDoc("v1", new()
-    {
-        Title = "API-Clean-VS",
-        Description = ".Net Core API using Clean Architecture and Vertical Slice"
-    })
-);
+builder.Services.AddSwaggerGen(o => o.SwaggerDoc("v1", new()
+{
+    Title = "API-Clean-VS",
+    Description = ".Net Core API using Clean Architecture and Vertical Slice"
+}));
 
 builder.Services.AddUseCases();
 builder.Services.AddEndpoints();
@@ -18,10 +16,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    app.UseScalar(o => o.RoutePrefix = "");
 }
 
-app.UseHttpsRedirection();
-
 app.MapEndpoints();
+
+app.UseHttpsRedirection();
 
 app.Run();
