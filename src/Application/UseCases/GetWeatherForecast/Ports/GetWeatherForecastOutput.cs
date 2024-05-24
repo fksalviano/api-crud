@@ -1,7 +1,7 @@
 using System.Collections;
 using Application.UseCases.GetWeatherForecast.Domain;
 
-namespace Application.UseCases.GetWeather.Ports;
+namespace Application.UseCases.GetWeatherForecast.Ports;
 
 public class GetWeatherForecastOutput : IEnumerable<WeatherForecast>
 {

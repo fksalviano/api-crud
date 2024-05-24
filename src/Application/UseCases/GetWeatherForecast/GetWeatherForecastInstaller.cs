@@ -1,15 +1,14 @@
 using System.Diagnostics.CodeAnalysis;
-using Application.Commons.Abstractions;
 using Application.UseCases.GetWeatherForecast.Abstractions;
 using Application.UseCases.GetWeatherForecast.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Application.UseCases.GetWeather;
+namespace Application.UseCases.GetWeatherForecast;
 
 [ExcludeFromCodeCoverage]
-public class GetWeatherForecastInstaller : IServiceInstaller
+public static class GetWeatherForecastInstaller
 {
-    public void InstallServices(IServiceCollection services) =>
+    public static void AddGetWeatherForecastUseCase(this IServiceCollection services) =>
         services
             .AddScoped<IGetWeatherForecastUseCase, GetWeatherForecastUseCase>()
             .AddScoped<IWeatherForecastRepository, WeatherForecastRepository>();

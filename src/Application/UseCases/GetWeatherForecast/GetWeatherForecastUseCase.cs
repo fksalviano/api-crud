@@ -1,7 +1,7 @@
 using Application.UseCases.GetWeatherForecast.Abstractions;
 using Application.UseCases.GetWeatherForecast.Extensions;
 
-namespace Application.UseCases.GetWeather;
+namespace Application.UseCases.GetWeatherForecast;
 
 public class GetWeatherForecastUseCase : IGetWeatherForecastUseCase
 {

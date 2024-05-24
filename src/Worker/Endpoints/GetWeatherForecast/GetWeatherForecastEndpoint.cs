@@ -1,4 +1,4 @@
-using Application.UseCases.GetWeather.Ports;
+using Application.UseCases.GetWeatherForecast.Ports;
 using Application.UseCases.GetWeatherForecast.Abstractions;
 
 namespace Worker.Endpoints.GetWeatherForecast;

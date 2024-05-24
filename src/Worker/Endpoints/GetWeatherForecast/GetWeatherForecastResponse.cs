@@ -1,9 +1,9 @@
-using Application.Commons.Domain;
-using Application.UseCases.GetWeather.Ports;
+using Application.UseCases.GetWeatherForecast.Ports;
+using Worker.Base;
 
 namespace Worker.Endpoints.GetWeatherForecast;
 
-public class GetWeatherForecastResponse : Response<GetWeatherForecastOutput>
+public class GetWeatherForecastResponse : ResponseBase<GetWeatherForecastOutput>
 {
     
 }

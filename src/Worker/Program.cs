@@ -9,7 +9,8 @@ builder.Services.AddSwaggerGen(o =>
     })
 );
 
-builder.Services.InstallServices();
+builder.Services.AddUseCases();
+builder.Services.AddEndpoints();
 
 var app = builder.Build();
 

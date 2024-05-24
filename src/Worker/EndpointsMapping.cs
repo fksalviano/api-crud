@@ -1,7 +1,6 @@
-using Application.Commons.Domain;
 using Microsoft.AspNetCore.Mvc;
+using Worker.Base;
 using Worker.Endpoints.GetWeatherForecast;
-using Worker.Extensions;
 
 public static class EndpointsMapping
 {
@@ -12,7 +11,7 @@ public static class EndpointsMapping
             group.MapGet("/", ([FromServices] GetWeatherForecastEndpoint endpoint) => endpoint.GetWeatherForecast())
                 .WithDescription("Get weather forecasts sample endpoint")
                 .Produces<GetWeatherForecastResponse>(StatusCodes.Status200OK)
-                .Produces<Response<object>>(StatusCodes.Status404NotFound);            
+                .Produces<ResponseBase<object>>(StatusCodes.Status404NotFound);            
         });
     }    
 }

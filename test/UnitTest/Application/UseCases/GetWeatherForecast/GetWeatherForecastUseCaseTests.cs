@@ -1,5 +1,5 @@
-using Application.UseCases.GetWeather;
-using Application.UseCases.GetWeather.Ports;
+using Application.UseCases.GetWeatherForecast;
+using Application.UseCases.GetWeatherForecast.Ports;
 using Application.UseCases.GetWeatherForecast.Abstractions;
 using Application.UseCases.GetWeatherForecast.Domain;
 using AutoFixture;
