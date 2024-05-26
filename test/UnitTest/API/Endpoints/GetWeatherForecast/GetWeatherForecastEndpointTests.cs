@@ -5,12 +5,12 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Moq.AutoMock;
-using Worker.Endpoints.GetWeatherForecast;
+using API.Endpoints.GetWeatherForecast;
 using static Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace UnitTest.Worker.Controllers.GetWeatherForecast;
 
-public class GetWeatherForecastControllerTests
+public class GetWeatherForecastEndpointTests
 {
     private readonly GetWeatherForecastEndpoint _sut;
     private readonly IGetWeatherForecastOutputPort _outputPort;
@@ -19,7 +19,7 @@ public class GetWeatherForecastControllerTests
     private readonly AutoMocker _mocker = new();
     private readonly Fixture _fixture = new();
 
-    public GetWeatherForecastControllerTests()
+    public GetWeatherForecastEndpointTests()
     {
         _useCase = _mocker.GetMock<IGetWeatherForecastUseCase>();
         _sut = _mocker.CreateInstance<GetWeatherForecastEndpoint>();

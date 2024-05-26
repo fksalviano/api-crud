@@ -1,6 +1,6 @@
-using Worker.Endpoints.GetWeatherForecast;
+using API.Endpoints.GetWeatherForecast;
 
-namespace Worker.Extensions;
+namespace API.Extensions;
 
 public static class EndpointsInstallerExtension
 {

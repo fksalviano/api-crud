@@ -1,4 +1,4 @@
-namespace Worker.Base;
+namespace API.Base;
 
 public class ResponseBase<T>
 {

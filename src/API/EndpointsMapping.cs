@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Worker.Base;
-using Worker.Endpoints.GetWeatherForecast;
+using API.Base;
+using API.Endpoints.GetWeatherForecast;
 
 public static class EndpointsMapping
 {

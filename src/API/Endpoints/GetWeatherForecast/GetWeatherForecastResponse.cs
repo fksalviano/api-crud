@@ -1,7 +1,7 @@
 using Application.UseCases.GetWeatherForecast.Ports;
-using Worker.Base;
+using API.Base;
 
-namespace Worker.Endpoints.GetWeatherForecast;
+namespace API.Endpoints.GetWeatherForecast;
 
 public class GetWeatherForecastResponse : ResponseBase<GetWeatherForecastOutput>
 {

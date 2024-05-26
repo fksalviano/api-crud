@@ -1,7 +1,7 @@
 using Application.UseCases.GetWeatherForecast.Ports;
 using Application.UseCases.GetWeatherForecast.Abstractions;
 
-namespace Worker.Endpoints.GetWeatherForecast;
+namespace API.Endpoints.GetWeatherForecast;
 
 public class GetWeatherForecastEndpoint : IGetWeatherForecastOutputPort
 {

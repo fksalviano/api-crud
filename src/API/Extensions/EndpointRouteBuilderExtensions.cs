@@ -1,4 +1,4 @@
-namespace Worker.Extensions;
+namespace API.Extensions;
 
 public static class EndpointRouteBuilderExtensions
 {
