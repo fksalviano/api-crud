@@ -9,9 +9,9 @@ Architecture implemented to isolate the Application Common Domain from each Use 
 - **GetWeatherForecast**:
     Sample use case based on the sample .net API WeatherForecast.
 
-### Worker
+### API
 
-The API micro-service with the Controllers and endpoints.
+The API micro-service with the Endpoints, using minimal api endpoints mapping.
 
 ### Dependency Injection
 
