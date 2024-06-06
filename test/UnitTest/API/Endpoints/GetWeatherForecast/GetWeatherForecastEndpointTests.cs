@@ -1,58 +1,66 @@
-using Application.UseCases.GetWeatherForecast.Ports;
-using Application.UseCases.GetWeatherForecast.Abstractions;
 using AutoFixture;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Moq.AutoMock;
-using API.Endpoints.GetWeatherForecast;
+using API.Endpoints.WeatherForecast;
 using static Microsoft.AspNetCore.Http.StatusCodes;
+using Application.Handlers.GetWeatherForecast;
+using Application.Commons.Domain.Result;
+using API.Extensions;
+using Application.Handlers.GetWeatherForecast.Domain;
 
 namespace UnitTest.Worker.Controllers.GetWeatherForecast;
 
 public class GetWeatherForecastEndpointTests
 {
-    private readonly GetWeatherForecastEndpoint _sut;
-    private readonly IGetWeatherForecastOutputPort _outputPort;
-    private readonly Mock<IGetWeatherForecastUseCase> _useCase;
+    private readonly WeatherForecastEndpoints _sut;    
+    private readonly Mock<GetWeatherForecastHandler> _handler;
 
     private readonly AutoMocker _mocker = new();
     private readonly Fixture _fixture = new();
 
     public GetWeatherForecastEndpointTests()
     {
-        _useCase = _mocker.GetMock<IGetWeatherForecastUseCase>();
-        _sut = _mocker.CreateInstance<GetWeatherForecastEndpoint>();
-        _outputPort = (_sut as IGetWeatherForecastOutputPort);
+        _handler = _mocker.GetMock<GetWeatherForecastHandler>();
+        _sut = _mocker.CreateInstance<WeatherForecastEndpoints>();        
     }
 
     [Fact]
     public async Task ShouldGetWeatherForecastSuccessfully()
     {
         //Arrange
-        var output = _fixture.Create<GetWeatherForecastOutput>();
-        var expected = GetWeatherForecastResponse.Success(output);
-        _useCase.Setup(useCase => useCase.ExecuteAsync()).Callback(() =>_outputPort.Ok(output));
+        var result = _fixture.CreateMany<WeatherForecast>();
+        var resultOk = Result.Ok(result);
+
+        var expected = resultOk.ToResponse();
+
+        _handler.Setup(handler => handler.Handle(It.IsAny<GetWeatherForecastCommand>(), default))
+            .ReturnsAsync(resultOk);
 
         //Act
-        var result = await _sut.GetWeatherForecast() as ObjectResult;
+        var response = await _sut.GetWeatherForecast() as ObjectResult;
 
         //Assert
-        result!.StatusCode.Should().Be(Status200OK);
-        result!.Value.Should().BeEquivalentTo(expected);
+        response!.StatusCode.Should().Be(Status200OK);
+        response!.Value.Should().BeEquivalentTo(expected);
     }
 
     [Fact]
     public async Task ShouldGetWeatherForecastNotFound()
     {
-        //Arrange
-        _useCase.Setup(useCase => useCase.ExecuteAsync()).Callback(() =>_outputPort.NotFound());
+        // Arrange
+        var result = Result.NotFound();
+        var expexted = result.ToResponse();
+        
+        _handler.Setup(handler => handler.Handle(It.IsAny<GetWeatherForecastCommand>(), default))
+            .ReturnsAsync(result);
 
         //Act
-        var result = await _sut.GetWeatherForecast() as ObjectResult;
+        var resoponse = await _sut.GetWeatherForecast() as ObjectResult;
 
         //Assert
-        result!.StatusCode.Should().Be(Status404NotFound);
+        resoponse!.StatusCode.Should().Be(Status404NotFound);
     }
 
     [Fact]
@@ -60,14 +68,18 @@ public class GetWeatherForecastEndpointTests
     {
         //Arrange
         var message = _fixture.Create<string>();
-        var expected = GetWeatherForecastResponse.Error(message);
-        _useCase.Setup(useCase => useCase.ExecuteAsync()).Callback(() =>_outputPort.Error(message));
+        var result = Result.Error(message);
+
+        var expected = result.ToResponse();
+
+        _handler.Setup(handler => handler.Handle(It.IsAny<GetWeatherForecastCommand>(), default))
+            .ReturnsAsync(result);
 
         //Act
-        var result = await _sut.GetWeatherForecast() as ObjectResult;
+        var resposne = await _sut.GetWeatherForecast() as ObjectResult;
 
         //Assert
-        result!.StatusCode.Should().Be(Status500InternalServerError);
-        result!.Value.Should().BeEquivalentTo(expected);
+        resposne!.StatusCode.Should().Be(Status500InternalServerError);
+        resposne!.Value.Should().BeEquivalentTo(expected);
     }
 }

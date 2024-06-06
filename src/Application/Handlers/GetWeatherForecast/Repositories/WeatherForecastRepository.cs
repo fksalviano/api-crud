@@ -1,8 +1,7 @@
-using Application.UseCases.GetWeatherForecast.Abstractions;
-using Application.UseCases.GetWeatherForecast.Domain;
+using Application.Handlers.GetWeatherForecast.Domain;
 using Microsoft.Extensions.Logging;
 
-namespace Application.UseCases.GetWeatherForecast.Repositories;
+namespace Application.Handlers.GetWeatherForecast.Repositories;
 
 public class WeatherForecastRepository : IWeatherForecastRepository
 {    

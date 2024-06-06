@@ -1,5 +1,4 @@
-using Application.UseCases.GetWeatherForecast.Abstractions;
-using Application.UseCases.GetWeatherForecast.Repositories;
+using Application.Handlers.GetWeatherForecast.Repositories;
 using FluentAssertions;
 using Moq.AutoMock;
 

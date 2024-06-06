@@ -1,4 +1,4 @@
-using API.Endpoints.GetWeatherForecast;
+using API.Endpoints.WeatherForecast;
 
 namespace API.Extensions;
 
@@ -7,7 +7,7 @@ public static class EndpointsInstallerExtension
     public static IServiceCollection AddEndpoints(this IServiceCollection services)
     {
         services
-            .AddScoped<GetWeatherForecastEndpoint>();
+            .AddScoped<WeatherForecastEndpoints>();
 
         return services;
     }
