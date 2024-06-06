@@ -1,9 +1,9 @@
-using Application.Commons.Domain.Result;
+using Microsoft.AspNetCore.Http;
 using MediatR;
 
 namespace Application.Handlers.GetWeatherForecast;
 
-public class GetWeatherForecastCommand : IRequest<Result>
+public class GetWeatherForecastCommand : IRequest<IResult>
 {
     
 }
