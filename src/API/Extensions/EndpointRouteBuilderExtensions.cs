@@ -1,3 +1,5 @@
+using API.Filters;
+
 namespace API.Extensions;
 
 public static class EndpointRouteBuilderExtensions
@@ -5,8 +7,8 @@ public static class EndpointRouteBuilderExtensions
     public static IEndpointRouteBuilder MapGroup(this IEndpointRouteBuilder app, string tag, string prefix,
         Action<RouteGroupBuilder> action)
     {
-        var group = app.MapGroup(prefix)
-            .WithTags(tag)
+        var group = app.MapGroup(prefix).WithTags(tag)            
+            .AddEndpointFilter<ResponseFilter>()
             .WithOpenApi();
 
         action.Invoke(group);

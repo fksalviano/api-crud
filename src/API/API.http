@@ -1,0 +1,5 @@
+###
+
+GET https://localhost:7092/api/weatherforecast
+
+###

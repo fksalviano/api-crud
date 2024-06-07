@@ -1,19 +1,19 @@
+using Microsoft.AspNetCore.Mvc;
+using static Microsoft.AspNetCore.Http.StatusCodes;
 using Application.Handlers.GetWeatherForecast;
+using Application.Handlers.GetWeatherForecast.Domain;
 using MediatR;
+using API.Filters;
 
-namespace API.Endpoints.WeatherForecast;
-
-public class WeatherForecastEndpoints
+public static class WeatherForcastEndpoints
 {
-    private readonly IMediator _mediator;
+    public static IEndpointRouteBuilder MapWeatherForcastEndpoints (this IEndpointRouteBuilder app) =>
 
-    public WeatherForecastEndpoints(IMediator mediator)
-    {
-        _mediator = mediator;
-    }
-
-    public async Task<IResult> GetWeatherForecast()
-    {
-        return await _mediator.Send(new GetWeatherForecastCommand());
-    }
+        app.MapGroup("WeatherForecast", "/api/weatherforecast", group =>
+        {
+            group.MapGet("/", ([FromServices] IMediator mediator) => mediator.Send(new GetWeatherForecastCommand()))                
+                .WithDescription("Get weather forecasts sample endpoint")
+                .Produces<ResponseBase<IEnumerable<WeatherForecast>>>(Status200OK)
+                .Produces<ResponseBase<object?>>(Status404NotFound);
+        });
 }

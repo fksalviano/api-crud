@@ -1,12 +1,11 @@
 using Application.Handlers.GetWeatherForecast;
-using Application.Handlers.GetWeatherForecast.Ports;
 using Application.Handlers.GetWeatherForecast.Repositories;
 using Application.Handlers.GetWeatherForecast.Domain;
 using AutoFixture;
 using FluentAssertions;
 using Moq;
 using Moq.AutoMock;
-using Application.Commons.Domain.Result;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace UnitTest.Application.Handlers.GetWeatherForecast;
 
@@ -37,7 +36,7 @@ public class GetWeatherForecastUseCaseTests
         var result = await _sut.Handle(command, default);
 
         //Assert
-        result.Type.Should().Be(ResultType.Ok);
+        result.Should().BeOfType<Ok<IEnumerable<WeatherForecast>>>();
     }
 
     private bool IsEquivalent(IEnumerable<WeatherForecast> source, IEnumerable<WeatherForecast> expected)
@@ -58,7 +57,7 @@ public class GetWeatherForecastUseCaseTests
         var result = await _sut.Handle(command, default);
 
         //Assert
-        result.Type.Should().Be(ResultType.NotFound);
+        result.Should().BeOfType<Ok<IEnumerable<WeatherForecast>>>();
     }
 
     [Fact]
@@ -73,6 +72,6 @@ public class GetWeatherForecastUseCaseTests
         var result = await _sut.Handle(command, default);
 
         //Assert
-        result.Type.Should().Be(ResultType.Error);
+        result.Should().BeOfType<ProblemHttpResult>();
     }
 }
