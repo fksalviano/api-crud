@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
 using static Microsoft.AspNetCore.Http.StatusCodes;
 using Application.Handlers.GetWeatherForecast;
 using Application.Handlers.GetWeatherForecast.Domain;
@@ -11,9 +10,14 @@ public static class WeatherForcastEndpoints
 
         app.MapGroup("WeatherForecast", "/api/weatherforecast", group =>
         {
-            group.MapGet("/", ([FromServices] IMediator mediator) => mediator.Send(new GetWeatherForecastCommand()))                
+            group.MapGet("/", (IMediator mediator) => mediator.Send(new GetWeatherForecastCommand()))
                 .WithDescription("Get weather forecasts sample endpoint")
                 .Produces<ResponseBase<IEnumerable<WeatherForecast>>>(Status200OK)
+                .Produces<ResponseBase<object?>>(Status404NotFound);
+
+            group.MapGet("/{id}", (IMediator mediator, int id) => mediator.Send(new GetWeatherForecastCommand(id)))
+                .WithDescription("Get weather forecasts by Id")
+                .Produces<ResponseBase<WeatherForecast>>(Status200OK)
                 .Produces<ResponseBase<object?>>(Status404NotFound);
         });
 }

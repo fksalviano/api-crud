@@ -21,11 +21,19 @@ public class GetWeatherForecastHandler : IRequestHandler<GetWeatherForecastComma
             return Results.Problem("Error to Get Forecasts");
         }
 
+        if (request.IsGetById)
+        {
+            forecasts = forecasts.Where(forecast => forecast.Id == request.Id);
+        }
+
         if (!forecasts.Any())
         {
             return Results.NotFound();
         }
-        
-        return Results.Ok(forecasts);
+
+        if (request.IsGetById)
+            return Results.Ok(forecasts.First());
+        else        
+            return Results.Ok(forecasts);
     }
 }
