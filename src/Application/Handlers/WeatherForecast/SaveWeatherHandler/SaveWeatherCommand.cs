@@ -12,7 +12,7 @@ public class SaveWeatherCommand : IRequest<IResult>
     private int? Id { get; set; }
     public bool IsUpdate() => Id is not null;
 
-    public SaveWeatherCommand SetId(int value)
+    public SaveWeatherCommand WithId(int value)
     { 
         this.Id = value;
         return this;

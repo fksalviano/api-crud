@@ -29,7 +29,7 @@ public static class WeatherForcastEndpoints
                 .Produces<ResponseBase<WeatherForecast>>(Status200OK)
                 .Produces<ResponseBase<object?>>(Status400BadRequest);
             
-            group.MapPut("/{id}", (IMediator mediator, [FromRoute] int id, [FromBody] SaveWeatherCommand request) => mediator.Send(request.SetId(id)))
+            group.MapPut("/{id}", (IMediator mediator, [FromRoute] int id, [FromBody] SaveWeatherCommand request) => mediator.Send(request.WithId(id)))
                 .WithDescription("Update weather forecasts")
                 .Produces<ResponseBase<WeatherForecast>>(Status200OK)
                 .Produces<ResponseBase<object?>>(Status400BadRequest);
