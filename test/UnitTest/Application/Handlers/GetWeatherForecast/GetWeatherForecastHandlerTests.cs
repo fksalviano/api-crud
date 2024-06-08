@@ -1,6 +1,6 @@
-using Application.Handlers.GetWeatherForecast;
-using Application.Handlers.GetWeatherForecast.Repositories;
-using Application.Handlers.GetWeatherForecast.Domain;
+using Application.Handlers.WeatherForecast.GetWeatherHandler;
+using Application.Commons.Repositories;
+using Application.Domain;
 using AutoFixture;
 using FluentAssertions;
 using Moq;
@@ -11,7 +11,7 @@ namespace UnitTest.Application.Handlers.GetWeatherForecast;
 
 public class GetWeatherForecastUseCaseTests
 {
-    private readonly GetWeatherForecastHandler _sut;
+    private readonly GetWeatherHandler _sut;
     private readonly Mock<IWeatherForecastRepository> _repository;
 
     private readonly AutoMocker _mocker = new();
@@ -20,17 +20,17 @@ public class GetWeatherForecastUseCaseTests
     public GetWeatherForecastUseCaseTests()
     {
         _repository = _mocker.GetMock<IWeatherForecastRepository>();
-        _sut = _mocker.CreateInstance<GetWeatherForecastHandler>();
+        _sut = _mocker.CreateInstance<GetWeatherHandler>();
     }
 
     [Fact]
     public async Task ShouldExecuteSuccessfully()
     {
         //Arrange
-        var command =  _fixture.Create<GetWeatherForecastCommand>();
+        var command =  _fixture.Create<GetWeatherCommand>();
         var expected = _fixture.CreateMany<WeatherForecast>(5);
 
-        _repository.Setup(repo => repo.GetWeatherForecasts()).ReturnsAsync(expected);
+        _repository.Setup(repo => repo.GetAll()).ReturnsAsync(expected);
 
         //Act
         var result = await _sut.Handle(command, default);
@@ -49,9 +49,9 @@ public class GetWeatherForecastUseCaseTests
     public async Task ShouldExecuteNotFound()
     {
         //Arrange
-        var command =  _fixture.Create<GetWeatherForecastCommand>();
+        var command =  _fixture.Create<GetWeatherCommand>();
         var expected = _fixture.CreateMany<WeatherForecast>(0);
-        _repository.Setup(repo => repo.GetWeatherForecasts()).ReturnsAsync(expected);
+        _repository.Setup(repo => repo.GetAll()).ReturnsAsync(expected);
 
         //Act
         var result = await _sut.Handle(command, default);
@@ -64,9 +64,9 @@ public class GetWeatherForecastUseCaseTests
     public async Task ShouldExecuteWithError()
     {
         //Arrange
-        var command =  _fixture.Create<GetWeatherForecastCommand>();
+        var command =  _fixture.Create<GetWeatherCommand>();
         var expected = (IEnumerable<WeatherForecast>) null!;
-        _repository.Setup(repo => repo.GetWeatherForecasts()).ReturnsAsync(expected);
+        _repository.Setup(repo => repo.GetAll()).ReturnsAsync(expected);
 
         //Act
         var result = await _sut.Handle(command, default);

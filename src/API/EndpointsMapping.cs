@@ -1,3 +1,4 @@
+using API.Endpoints;
 
 public static class EndpointsMapping
 {

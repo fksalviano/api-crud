@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection;
-using Application.Handlers.GetWeatherForecast.Installers;
+using Application.Commons.Repositories.Installers;
 
 namespace Application.Commons.Extensions;
 
@@ -9,5 +9,5 @@ public static class HandlersInstallerExtension
 {
     public static IServiceCollection AddHandlersDependencies(this IServiceCollection services) =>
         services
-            .AddGetWeatherForecastDependencies();
+            .AddRepositories();
 }

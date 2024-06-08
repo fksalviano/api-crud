@@ -1,5 +1,5 @@
 
-using Application.Handlers.GetWeatherForecast.Domain;
+using Application.Domain;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace API.Filters;

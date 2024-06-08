@@ -1,4 +1,4 @@
-namespace Application.Handlers.GetWeatherForecast.Domain;
+namespace Application.Domain;
 
 public class WeatherForecast
 {
