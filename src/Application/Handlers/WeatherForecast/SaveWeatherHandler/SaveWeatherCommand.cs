@@ -11,6 +11,7 @@ public class SaveWeatherCommand : IRequest<IResult>
 
     private int? Id { get; set; }
     public bool IsUpdate() => Id is not null;
+    public int? GetId() => Id;
 
     public SaveWeatherCommand WithId(int value)
     { 

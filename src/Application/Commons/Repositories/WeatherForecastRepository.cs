@@ -45,7 +45,7 @@ public class WeatherForecastRepository : IWeatherForecastRepository
     }
 
     public async Task<bool?> Create(WeatherForecast weatherforecast)
-    {
+    {        
         _forecasts = _forecasts!.Append(weatherforecast);
 
         return await Task.FromResult(true);
@@ -53,6 +53,8 @@ public class WeatherForecastRepository : IWeatherForecastRepository
 
     public async Task<bool?> Update(WeatherForecast weatherforecast)
     {
+        //returns new list without the actual and adding the new object
+        
         _forecasts = _forecasts!
             .Where(forecast => forecast.Id != weatherforecast.Id)
             .Append(weatherforecast);

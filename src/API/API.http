@@ -3,3 +3,14 @@
 GET https://localhost:7092/api/weatherforecast
 
 ###
+
+POST  https://localhost:7092/api/weatherforecast
+Content-Type: application/json
+
+{    
+    "date": "2024-06-09T15:05:02.9054233-03:00",
+    "temperatureC": 0,    
+    "summary": ""   
+}
+
+###
