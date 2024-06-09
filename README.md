@@ -1,21 +1,22 @@
 # Api-Clean-VS
 
-.Net Core API sample using Clean Architecture and Vertical Slice
+.Net 9 API crud sample using Mediator pattern with MediatR, Commands, Handlers and valiadtions with Handlers PipelineBehavior.
 
-Architecture implemented to isolate the Application Common Domain from each Use Case Domain.
+Using Minimal API approach mapping Endpoints instead of Controllers.
 
-### Use Cases
+Using Scalar for API documentation without Swagger.
 
-- **GetWeatherForecast**:
-    Sample use case based on the sample .net API WeatherForecast.
+### Handlers
+
+- **GetWeatherHandler**:
+    Handler based on the sample .net template API WeatherForecast to Get All or Get by Id based on the command sended by API request.
+
+- **SaveWeatherHandler**:
+    Handler to Create or Update Wheaters based on the command sended by API request.
 
 ### API
 
 The API micro-service with the Endpoints, using minimal api endpoints mapping.
-
-### Dependency Injection
-
-The project uses Dependence Injection to build the container services and uses self-installers to add each Use Case on the container independently.
 
 ## Tests
 
@@ -35,7 +36,7 @@ Need to install the follow:
     https://git-scm.com/downloads
 
 - Dotnet Core 7.0 SDK and Runtime:
-    https://dotnet.microsoft.com/en-us/download/dotnet/7.0
+    https://dotnet.microsoft.com/en-us/download/dotnet/9.0
 
 
 ## Getting Started
@@ -67,6 +68,12 @@ dotnet run --project src/Worker
 ## Packages
 
 The project uses the following packages
+
+- MediatR:
+    https://www.nuget.org/packages/MediatR
+
+- Scalar:
+    https://www.nuget.org/packages/Scalar.AspNetCore
 
 - FluentValidation:
     https://www.nuget.org/packages/fluentvalidation

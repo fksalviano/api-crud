@@ -1,9 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
 using static Microsoft.AspNetCore.Http.StatusCodes;
 using Application.Handlers.WeatherForecast.GetWeatherHandler;
 using Application.Handlers.WeatherForecast.SaveWeatherHandler;
 using Application.Domain;
-using Application.Domain.Result;
 using MediatR;
 
 namespace API.Endpoints;
@@ -16,22 +14,23 @@ public static class WeatherForcastEndpoints
         {
             group.MapGet("/", (IMediator mediator) => mediator.Send(new GetWeatherCommand()))
                 .WithDescription("Get weather forecasts sample endpoint")
-                .Produces<ResponseBase<IEnumerable<WeatherForecast>>>(Status200OK)
-                .Produces<ResponseBase<object?>>(Status404NotFound);
+                .Produces<IEnumerable<WeatherForecast>>(Status200OK)
+                .Produces(Status404NotFound);
 
             group.MapGet("/{id}", (IMediator mediator, int id) => mediator.Send(new GetWeatherCommand(id)))
                 .WithDescription("Get weather forecasts by Id")
-                .Produces<ResponseBase<WeatherForecast>>(Status200OK)
-                .Produces<ResponseBase<object?>>(Status404NotFound);
+                .Produces<WeatherForecast>(Status200OK)
+                .Produces(Status404NotFound);
 
-            group.MapPost("/", (IMediator mediator, [FromBody] SaveWeatherCommand request) => mediator.Send(request))
+            group.MapPost("/", (IMediator mediator, SaveWeatherCommand request) => mediator.Send(request))
                 .WithDescription("Save weather forecasts")
-                .Produces<ResponseBase<WeatherForecast>>(Status200OK)
-                .Produces<ResponseBase<object?>>(Status400BadRequest);
+                .Produces<WeatherForecast>(Status201Created)
+                .Produces(Status400BadRequest);
             
-            group.MapPut("/{id}", (IMediator mediator, [FromRoute] int id, [FromBody] SaveWeatherCommand request) => mediator.Send(request.WithId(id)))
+            group.MapPut("/{id}", (IMediator mediator, int id, SaveWeatherCommand request) => mediator.Send(request.WithId(id)))
                 .WithDescription("Update weather forecasts")
-                .Produces<ResponseBase<WeatherForecast>>(Status200OK)
-                .Produces<ResponseBase<object?>>(Status400BadRequest);
+                .Produces<WeatherForecast>(Status202Accepted)
+                .Produces(Status400BadRequest)
+                .Produces(Status404NotFound);
         });
 }

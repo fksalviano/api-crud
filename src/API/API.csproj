@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mediatr" Version="12.2.0" />
+    <PackageReference Include="Mediatr" Version="12.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0-preview.4.24267.6" />
     <PackageReference Include="Scalar.AspNetCore" Version="1.1.1" />
   </ItemGroup>

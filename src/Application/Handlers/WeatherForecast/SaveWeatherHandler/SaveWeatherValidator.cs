@@ -1,8 +1,8 @@
+using Microsoft.AspNetCore.Http;
 using FluentValidation;
 using MediatR;
 using Application.Commons.Repositories;
 using Application.Commons.Extensions;
-using Application.Domain.Result;
 
 namespace Application.Handlers.WeatherForecast.SaveWeatherHandler;
 
@@ -26,7 +26,7 @@ public class SaveWeatherValidator<TRequest, TResponse> : AbstractValidator<TRequ
         var validation = await ValidateAsync(request, cancellationToken);
         if (!validation.IsValid)
         {            
-            return (Result.BadRequest(validation.Errors.ToStrings()) as TResponse)!;
+            return (Results.BadRequest(validation.Errors.ToStrings()) as TResponse)!;
         }
     
         if (request.IsUpdate())
@@ -34,7 +34,7 @@ public class SaveWeatherValidator<TRequest, TResponse> : AbstractValidator<TRequ
             var existsId = (await _repository.GetAll())!.Any(forecast => forecast.Id == request.GetId());
             if (!existsId)
             {
-                return (Result.BadRequest("Id not found to update") as TResponse)!;
+                return (Results.NotFound("Id not found to update") as TResponse)!;
             }
         }
 
