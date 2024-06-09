@@ -1,7 +1,7 @@
 
-using Microsoft.AspNetCore.Http;
 using Application.Commons.Repositories;
 using MediatR;
+using Application.Domain.Result;
 
 namespace Application.Handlers.WeatherForecast.SaveWeatherHandler;
 
@@ -22,9 +22,9 @@ public class SaveWeatherHandler : IRequestHandler<SaveWeatherCommand, IResult>
 
         if (forecastSaved == null)
         {
-            return Results.Problem("Error to Save Forecasts");
+            return Result.Problem("Error to Save Forecasts");
         }
 
-        return Results.Ok(forecast);
+        return Result.Ok(forecast);
     }
 }

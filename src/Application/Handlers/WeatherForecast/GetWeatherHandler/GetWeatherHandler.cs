@@ -1,7 +1,7 @@
 
-using Microsoft.AspNetCore.Http;
 using Application.Commons.Repositories;
 using MediatR;
+using Application.Domain.Result;
 
 namespace Application.Handlers.WeatherForecast.GetWeatherHandler;
 
@@ -18,7 +18,7 @@ public class GetWeatherHandler : IRequestHandler<GetWeatherCommand, IResult>
 
         if (forecasts == null)
         {
-            return Results.Problem("Error to Get Forecasts");
+            return Result.Problem("Error to Get Forecasts");
         }
 
         if (request.IsGetById)
@@ -28,12 +28,12 @@ public class GetWeatherHandler : IRequestHandler<GetWeatherCommand, IResult>
 
         if (!forecasts.Any())
         {
-            return Results.NotFound();
+            return Result.NotFound();
         }
 
         if (request.IsGetById)
-            return Results.Ok(forecasts.First());
+            return Result.Ok(forecasts.First());
         else        
-            return Results.Ok(forecasts);
+            return Result.Ok(forecasts);
     }
 }

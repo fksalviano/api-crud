@@ -3,7 +3,7 @@ using static Microsoft.AspNetCore.Http.StatusCodes;
 using Application.Handlers.WeatherForecast.GetWeatherHandler;
 using Application.Handlers.WeatherForecast.SaveWeatherHandler;
 using Application.Domain;
-using API.Filters;
+using Application.Domain.Result;
 using MediatR;
 
 namespace API.Endpoints;

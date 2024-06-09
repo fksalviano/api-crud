@@ -12,8 +12,10 @@ public static class HandlersInstallerExtension
         services
             .AddRepositories();
 
-    public static MediatRServiceConfiguration AddOpenBehaviors(this MediatRServiceConfiguration configuration) =>
-        configuration            
-            .AddOpenBehavior(typeof(SaveWeatherValidator<,>));
+    public static MediatRServiceConfiguration AddOpenBehaviors(this MediatRServiceConfiguration configuration)
+    {
+        return configuration
+            .AddOpenBehavior(typeof(SaveWeatherValidator<,>));        
+    }        
 
 }
