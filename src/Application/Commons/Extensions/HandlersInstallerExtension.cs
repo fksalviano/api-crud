@@ -1,7 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Application.Commons.Repositories.Installers;
 using Application.Handlers.WeatherForecast.SaveWeatherHandler;
+using MediatR;
 
 namespace Application.Commons.Extensions;
 
@@ -13,9 +15,14 @@ public static class HandlersInstallerExtension
             .AddRepositories();
 
     public static MediatRServiceConfiguration AddOpenBehaviors(this MediatRServiceConfiguration configuration)
-    {
-        return configuration
-            .AddOpenBehavior(typeof(SaveWeatherValidator<,>));        
-    }        
+    {        
+        var types = Assembly.GetExecutingAssembly().GetTypes().Where(type => type.GetInterfaces()
+            .Any(intf => intf.IsGenericType && intf.GetGenericTypeDefinition() == typeof(IPipelineBehavior<,>)));
+
+        foreach (var behaviorType  in types)
+            configuration.AddOpenBehavior(behaviorType);
+
+        return configuration;
+    }
 
 }
