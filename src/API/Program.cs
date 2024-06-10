@@ -1,8 +1,8 @@
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi("v1",
-    "API-Clean-VS",
-    ".Net Core API sample using Clean Architecture and Vertical Slice");
+    "Api-CRUD",
+    ".Net 9 API crud with MediatR, Commands, Handlers and valiadtions with PipelineBehavior.");
 
 builder.Services.AddMediatR(configuration => configuration
     .RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies())

@@ -1,4 +1,4 @@
-# Api-Clean-VS
+# Api-CRUD
 
 .Net 9 API crud sample using Mediator pattern with MediatR, Commands, Handlers and valiadtions with Handlers PipelineBehavior.
 
@@ -44,13 +44,13 @@ Need to install the follow:
 #### Clone the repository:
 
 ```bash
-git clone https://github.com/fksalviano/api-clean-vs.git
+git clone https://github.com/fksalviano/api-crud.git
 ```
 
 #### Go to the project directory
 
 ```bash
-cd api-clean-vs
+cd api-crud
 ```
 
 #### Build the project
