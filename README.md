@@ -62,7 +62,7 @@ dotnet build
 #### Run the project
 
 ```bash
-dotnet run --project src/Worker
+dotnet run --project src/API
 ```
 
 ## Packages
