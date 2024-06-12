@@ -1,4 +1,5 @@
-using static Microsoft.AspNetCore.Http.StatusCodes;
+using Microsoft.AspNetCore.Mvc;
+using static System.Net.HttpStatusCode;
 using Application.Handlers.WeatherForecast.GetWeatherHandler;
 using Application.Handlers.WeatherForecast.SaveWeatherHandler;
 using Application.Domain;
@@ -14,23 +15,23 @@ public static class WeatherForcastEndpoints
         {
             group.MapGet("/", (IMediator mediator) => mediator.Send(new GetWeatherCommand()))
                 .WithDescription("Get weather forecasts sample endpoint")
-                .Produces<IEnumerable<WeatherForecast>>(Status200OK)
-                .Produces(Status404NotFound);
+                .ProducesResponse<IEnumerable<WeatherForecast>>(OK)
+                .ProducesResponse(NotFound);
 
             group.MapGet("/{id}", (IMediator mediator, int id) => mediator.Send(new GetWeatherCommand(id)))
                 .WithDescription("Get weather forecasts by Id")
-                .Produces<WeatherForecast>(Status200OK)
-                .Produces(Status404NotFound);
+                .ProducesResponse<WeatherForecast>(OK)
+                .ProducesResponse(NotFound);
 
-            group.MapPost("/", (IMediator mediator, SaveWeatherCommand request) => mediator.Send(request))
+            group.MapPost("/", ([FromServices] IMediator mediator, SaveWeatherCommand request) => mediator.Send(request))
                 .WithDescription("Save weather forecasts")
-                .Produces<WeatherForecast>(Status201Created)
-                .Produces(Status400BadRequest);
+                .ProducesResponse<WeatherForecast>(Created)
+                .ProducesResponse(BadRequest);
             
             group.MapPut("/{id}", (IMediator mediator, int id, SaveWeatherCommand request) => mediator.Send(request.WithId(id)))
                 .WithDescription("Update weather forecasts")
-                .Produces<WeatherForecast>(Status202Accepted)
-                .Produces(Status400BadRequest)
-                .Produces(Status404NotFound);
+                .ProducesResponse<WeatherForecast>(Accepted)
+                .ProducesResponse(BadRequest)
+                .ProducesResponse(NotFound);
         });
 }

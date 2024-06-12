@@ -2,8 +2,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Application.Commons.Repositories.Installers;
-using Application.Handlers.WeatherForecast.SaveWeatherHandler;
 using MediatR;
+using FluentValidation;
 
 namespace Application.Commons.Extensions;
 
@@ -12,7 +12,8 @@ public static class HandlersInstallerExtension
 {
     public static IServiceCollection AddHandlersDependencies(this IServiceCollection services) =>
         services
-            .AddRepositories();
+            .AddRepositories()
+            .AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
 
     public static MediatRServiceConfiguration AddOpenBehaviors(this MediatRServiceConfiguration configuration)
     {        

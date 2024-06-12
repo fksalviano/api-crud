@@ -1,23 +1,18 @@
 using Microsoft.AspNetCore.Http;
-using Application.Commons.Repositories;
 using MediatR;
+using Application.Commons.Repositories;
 
 namespace Application.Handlers.WeatherForecast.SaveWeatherHandler;
 
-public class SaveWeatherHandler : IRequestHandler<SaveWeatherCommand, IResult>
-{
-    private readonly IWeatherForecastRepository _repository;
-
-    public SaveWeatherHandler(IWeatherForecastRepository repository) =>
-        _repository = repository;
-
+public class SaveWeatherHandler(IWeatherForecastRepository repository) : IRequestHandler<SaveWeatherCommand, IResult>
+{    
     public async Task<IResult> Handle(SaveWeatherCommand request, CancellationToken cancellationToken)
     {
-        var forecast = request.ToForecast(_repository.NextId);
+        var forecast = request.ToForecast(repository.NextId);
 
         var forecastSaved = request.IsUpdate()
-            ? await _repository.Update(forecast)
-            : await _repository.Create(forecast);
+            ? await repository.Update(forecast)
+            : await repository.Create(forecast);
 
         if (forecastSaved == null)
         {

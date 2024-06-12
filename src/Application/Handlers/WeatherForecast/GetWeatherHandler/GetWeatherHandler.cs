@@ -1,19 +1,14 @@
 using Microsoft.AspNetCore.Http;
-using Application.Commons.Repositories;
 using MediatR;
+using Application.Commons.Repositories;
 
 namespace Application.Handlers.WeatherForecast.GetWeatherHandler;
 
-public class GetWeatherHandler : IRequestHandler<GetWeatherCommand, IResult>
-{
-    private readonly IWeatherForecastRepository _repository;
-
-    public GetWeatherHandler(IWeatherForecastRepository repository) =>
-        _repository = repository;
-
+public class GetWeatherHandler(IWeatherForecastRepository repository) : IRequestHandler<GetWeatherCommand, IResult>
+{        
     public async Task<IResult> Handle(GetWeatherCommand request, CancellationToken cancellationToken)
     {
-        var forecasts = await _repository.GetAll();
+        var forecasts = await repository.GetAll();
 
         if (forecasts == null)
         {

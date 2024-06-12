@@ -6,32 +6,28 @@ using Application.Commons.Extensions;
 
 namespace Application.Handlers.WeatherForecast.SaveWeatherHandler;
 
-public class SaveWeatherValidator<TRequest, TResponse> : AbstractValidator<TRequest>, IPipelineBehavior<TRequest, TResponse>
-        where TRequest : SaveWeatherCommand 
-        where TResponse : class, IResult
-{
-    private readonly IWeatherForecastRepository _repository;
-
-    public SaveWeatherValidator(IWeatherForecastRepository repository)
-    {
-        _repository = repository;
-
-        RuleFor(request => request.Date).NotEmpty();
-        RuleFor(request => request.TemperatureC).NotEmpty();
-        RuleFor(request => request.Summary).NotEmpty();
-    }
+public class SaveWeatherValidator<TRequest, TResponse>(IWeatherForecastRepository repository, IValidator<Domain.WeatherForecast> validator) 
+    : IPipelineBehavior<TRequest, TResponse>
+        where TRequest : SaveWeatherCommand where TResponse : class, IResult
+{    
 
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-        var validation = await ValidateAsync(request, cancellationToken);
+        var forecast = request.ToForecast();
+
+        // domain validations
+
+        var validation = await validator.ValidateAsync(forecast, cancellationToken);
         if (!validation.IsValid)
         {            
             return (Results.BadRequest(validation.Errors.ToStrings()) as TResponse)!;
         }
-    
+
+        // business validations
+
         if (request.IsUpdate())
         {
-            var existsId = (await _repository.GetAll())!.Any(forecast => forecast.Id == request.GetId());
+            var existsId = (await repository.GetAll())!.Any(forecast => forecast.Id == request.GetId());
             if (!existsId)
             {
                 return (Results.NotFound("Id not found to update") as TResponse)!;

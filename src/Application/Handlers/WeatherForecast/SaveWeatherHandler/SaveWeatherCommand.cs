@@ -19,7 +19,7 @@ public class SaveWeatherCommand : IRequest<IResult>
         return this;
     }
 
-    public Domain.WeatherForecast ToForecast(int nextId) => new()
+    public Domain.WeatherForecast ToForecast(int nextId = int.MaxValue) => new()
     {
         Id = this.Id ?? nextId,
         Date = this.Date,

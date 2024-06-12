@@ -1,16 +1,27 @@
 ###
 
-GET https://localhost:7092/api/weatherforecast
+GET http://localhost:5000/api/weatherforecast
 
 ###
 
-POST  https://localhost:7092/api/weatherforecast
+POST  http://localhost:5000/api/weatherforecast
 Content-Type: application/json
 
 {    
     "date": "2024-06-09T15:05:02.9054233-03:00",
-    "temperatureC": 0,    
-    "summary": ""   
+    "temperatureC": 10,    
+    "summary": "Teste"   
+}
+
+###
+
+PUT  http://localhost:5000/api/weatherforecast/6
+Content-Type: application/json
+
+{    
+    "date": "2024-06-09T15:05:02.9054233-03:00",
+    "temperatureC": 10,    
+    "summary": "Teste"   
 }
 
 ###
