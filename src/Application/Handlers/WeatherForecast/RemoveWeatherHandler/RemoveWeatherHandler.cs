@@ -1,0 +1,20 @@
+using Microsoft.AspNetCore.Http;
+using MediatR;
+using Application.Commons.Repositories;
+
+namespace Application.Handlers.WeatherForecast.RemoveWeatherHandler;
+
+public class RemoveWeatherHandler(IWeatherForecastRepository repository) : IRequestHandler<RemoveWeatherCommand, IResult>
+{
+    public async Task<IResult> Handle(RemoveWeatherCommand request, CancellationToken cancellationToken)
+    {
+        var forecastRemoved = await repository.Delete(request.Id);
+
+        if (forecastRemoved == null)
+        {
+            return Results.Problem("Error to Remove Forecasts");
+        }
+
+        return Results.NoContent();
+    }
+}

@@ -4,11 +4,7 @@ builder.Services.AddOpenApi("v1",
     "Api-CRUD",
     ".Net 9 API crud with MediatR, Commands, Handlers and valiadtions with PipelineBehavior.");
 
-builder.Services.AddMediatR(configuration => configuration
-    .RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies())
-    .AddOpenBehaviors());
-
-builder.Services.AddHandlersDependencies();
+builder.Services.AddMediator();
 
 var app = builder.Build();
 

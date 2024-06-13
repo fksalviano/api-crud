@@ -4,10 +4,10 @@ using Microsoft.Extensions.Logging;
 namespace Application.Commons.Repositories;
 
 public class WeatherForecastRepository : IWeatherForecastRepository
-{    
+{
     private ILogger<WeatherForecastRepository> _logger;
 
-    private IEnumerable<WeatherForecast>? _forecasts = null;    
+    private IEnumerable<WeatherForecast>? _forecasts = null;
 
     public WeatherForecastRepository(ILogger<WeatherForecastRepository> logger)
     {
@@ -20,13 +20,13 @@ public class WeatherForecastRepository : IWeatherForecastRepository
     {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
-    
+
     public async Task<IEnumerable<WeatherForecast>?> GetAll()
-    {        
+    {
         try
         {
-            _forecasts = _forecasts ?? await Task.Run(() => 
-                Enumerable.Range(1, 5).Select(index => 
+            _forecasts = _forecasts ?? await Task.Run(() =>
+                Enumerable.Range(1, 5).Select(index =>
                     new WeatherForecast
                     {
                         Id = index,
@@ -45,7 +45,7 @@ public class WeatherForecastRepository : IWeatherForecastRepository
     }
 
     public async Task<bool?> Create(WeatherForecast weatherforecast)
-    {        
+    {
         _forecasts = _forecasts!.Append(weatherforecast);
 
         return await Task.FromResult(true);
@@ -54,10 +54,19 @@ public class WeatherForecastRepository : IWeatherForecastRepository
     public async Task<bool?> Update(WeatherForecast weatherforecast)
     {
         //returns new list without the actual and adding the new object
-        
+
         _forecasts = _forecasts!
             .Where(forecast => forecast.Id != weatherforecast.Id)
             .Append(weatherforecast);
+
+        return await Task.FromResult(true);
+    }
+
+    public async Task<bool?> Delete(int id)
+    {
+        //returns new list without the actual id
+
+        _forecasts = _forecasts!.Where(forecast => forecast.Id != id);
 
         return await Task.FromResult(true);
     }
