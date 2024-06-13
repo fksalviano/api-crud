@@ -24,7 +24,7 @@ public static class WeatherForcastEndpoints
                 .ProducesResponse<WeatherForecast>(OK)
                 .ProducesResponse(NotFound);
 
-            group.MapPost("/", ([FromServices] IMediator mediator, SaveWeatherCommand request) => mediator.Send(request))
+            group.MapPost("/", (IMediator mediator, SaveWeatherCommand request) => mediator.Send(request))
                 .WithDescription("Save weather forecasts")
                 .ProducesResponse<WeatherForecast>(Created)
                 .ProducesResponse(BadRequest);
