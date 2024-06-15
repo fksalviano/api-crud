@@ -1,4 +1,4 @@
-using Application.Commons.Repositories;
+using Infra.Data.Repositories;
 using FluentAssertions;
 using Moq.AutoMock;
 
@@ -18,7 +18,7 @@ public class WeatherForecastRepositoryTests
     public async Task ShouldGetWeatherForecastsSuccessfully()
     {
         //Act
-        var result = await _sut.GetAll();
+        var result = await _sut.Get();
 
         //Assert
         result.Should().NotBeNullOrEmpty();

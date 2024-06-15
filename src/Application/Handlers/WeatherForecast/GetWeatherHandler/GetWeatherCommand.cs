@@ -5,11 +5,11 @@ namespace Application.Handlers.WeatherForecast.GetWeatherHandler;
 
 public class GetWeatherCommand : IRequest<IResult>
 {    
-    public int? Id { get; }
+    public Guid? Id { get; }
 
     public bool IsGetById => Id is not null;
 
-    public GetWeatherCommand(int? id = null)
+    public GetWeatherCommand(Guid? id = null)
     {
         Id = id;
     }

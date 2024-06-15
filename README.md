@@ -2,9 +2,11 @@
 
 .Net 9 API crud sample using Mediator pattern with MediatR, Commands, Handlers and valiadtions with Handlers PipelineBehavior.
 
-Using Minimal API approach mapping Endpoints instead of Controllers.
+Using Minimal API approach mapping Endpoints instead of Controllers with Scalar for API documentation without Swagger.
 
-Using Scalar for API documentation without Swagger.
+Data access with Dapper and DapperExtensions to generate and execute CRUD SQL commands.
+
+Using SQLite Database in memory.
 
 ### Handlers
 
@@ -13,6 +15,9 @@ Using Scalar for API documentation without Swagger.
 
 - **SaveWeatherHandler**:
     Handler to Create or Update Wheaters based on the command sended by API request.
+
+- **RemoveWeatherHandler**:
+    Handler to Delete Wheaters based on the command sended by API request.
 
 ### API
 
@@ -35,7 +40,7 @@ Need to install the follow:
 - Git:
     https://git-scm.com/downloads
 
-- Dotnet Core 7.0 SDK and Runtime:
+- Dotnet Core 9.0 SDK and Runtime:
     https://dotnet.microsoft.com/en-us/download/dotnet/9.0
 
 
@@ -71,6 +76,12 @@ The project uses the following packages
 
 - MediatR:
     https://www.nuget.org/packages/MediatR
+
+- Dapper:
+    https://www.nuget.org/packages/Dapper
+
+- DapperExtensions:
+    https://www.nuget.org/packages/DapperExtensions    
 
 - Scalar:
     https://www.nuget.org/packages/Scalar.AspNetCore

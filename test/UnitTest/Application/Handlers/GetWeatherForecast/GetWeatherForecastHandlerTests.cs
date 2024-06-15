@@ -1,6 +1,6 @@
 using Application.Handlers.WeatherForecast.GetWeatherHandler;
-using Application.Commons.Repositories;
-using Application.Domain;
+using Infra.Data.Repositories;
+using Domain.Model;
 using AutoFixture;
 using FluentAssertions;
 using Moq;
@@ -30,7 +30,7 @@ public class GetWeatherForecastUseCaseTests
         var command =  _fixture.Create<GetWeatherCommand>();
         var expected = _fixture.CreateMany<WeatherForecast>(5);
 
-        _repository.Setup(repo => repo.GetAll()).ReturnsAsync(expected);
+        _repository.Setup(repo => repo.Get()).ReturnsAsync(expected);
 
         //Act
         var result = await _sut.Handle(command, default);
@@ -51,7 +51,7 @@ public class GetWeatherForecastUseCaseTests
         //Arrange
         var command =  _fixture.Create<GetWeatherCommand>();
         var expected = _fixture.CreateMany<WeatherForecast>(0);
-        _repository.Setup(repo => repo.GetAll()).ReturnsAsync(expected);
+        _repository.Setup(repo => repo.Get()).ReturnsAsync(expected);
 
         //Act
         var result = await _sut.Handle(command, default);
@@ -66,7 +66,7 @@ public class GetWeatherForecastUseCaseTests
         //Arrange
         var command =  _fixture.Create<GetWeatherCommand>();
         var expected = (IEnumerable<WeatherForecast>) null!;
-        _repository.Setup(repo => repo.GetAll()).ReturnsAsync(expected);
+        _repository.Setup(repo => repo.Get()).ReturnsAsync(expected);
 
         //Act
         var result = await _sut.Handle(command, default);

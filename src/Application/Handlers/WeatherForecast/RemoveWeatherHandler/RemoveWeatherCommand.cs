@@ -3,5 +3,5 @@ using MediatR;
 
 namespace Application.Handlers.WeatherForecast.RemoveWeatherHandler;
 
-public record RemoveWeatherCommand(int Id) : IRequest<IResult>;
+public record RemoveWeatherCommand(Guid Id) : IRequest<IResult>;
     

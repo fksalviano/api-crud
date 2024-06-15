@@ -1,11 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using Application.Commons.Repositories.Extensions;
+using Infra.Extensions;
+using Infra.Data.Connection;
 using MediatR;
 using FluentValidation;
 
-namespace Application.Commons.Extensions;
+namespace Application.Extensions;
 
 [ExcludeFromCodeCoverage]
 public static class HandlersInstallerExtensions
@@ -20,15 +21,16 @@ public static class HandlersInstallerExtensions
     public static IServiceCollection AddHandlersDependencies(this IServiceCollection services) =>
         services
             .AddRepositories()
-            .AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
+            .AddDatabase()
+            .AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies(), ServiceLifetime.Scoped);
 
     public static void AddOpenBehaviors(this MediatRServiceConfiguration configuration)
-    {        
+    {
         var types = Assembly.GetExecutingAssembly().GetTypes().Where(type => type.GetInterfaces()
             .Any(intf => intf.IsGenericType && intf.GetGenericTypeDefinition() == typeof(IPipelineBehavior<,>)));
 
         foreach (var behaviorType  in types)
-            configuration.AddOpenBehavior(behaviorType);        
+            configuration.AddOpenBehavior(behaviorType, ServiceLifetime.Scoped);
     }
 
 }

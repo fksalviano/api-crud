@@ -1,13 +1,13 @@
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection;
-using Application.Commons.Repositories;
+using Infra.Data.Repositories;
 
-namespace Application.Commons.Repositories.Extensions;
+namespace Infra.Extensions;
 
 [ExcludeFromCodeCoverage]
 public static class RepositoriesInstallerExtensions
 {
     public static IServiceCollection AddRepositories(this IServiceCollection services) =>
         services            
-            .AddSingleton<IWeatherForecastRepository, WeatherForecastRepository>();
+            .AddScoped<IWeatherForecastRepository, WeatherForecastRepository>();
 }

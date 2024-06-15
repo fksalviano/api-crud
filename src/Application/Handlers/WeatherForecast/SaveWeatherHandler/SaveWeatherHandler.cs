@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using MediatR;
-using Application.Commons.Repositories;
+using Infra.Data.Repositories;
 
 namespace Application.Handlers.WeatherForecast.SaveWeatherHandler;
 
@@ -8,7 +8,7 @@ public class SaveWeatherHandler(IWeatherForecastRepository repository) : IReques
 {    
     public async Task<IResult> Handle(SaveWeatherCommand request, CancellationToken cancellationToken)
     {
-        var forecast = request.ToForecast(repository.NextId);
+        var forecast = request.ToForecast();
 
         var forecastSaved = request.IsUpdate()
             ? await repository.Update(forecast)
@@ -18,6 +18,11 @@ public class SaveWeatherHandler(IWeatherForecastRepository repository) : IReques
         {
             return Results.Problem("Error to Save Forecasts");
         }
+
+        if (request.IsUpdate() && !forecastSaved.Value)
+        {
+            return Results.Problem("Id not found to update");
+        }     
 
         var id = forecast.Id.ToString();
 

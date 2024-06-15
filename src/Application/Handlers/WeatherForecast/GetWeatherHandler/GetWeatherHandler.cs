@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using MediatR;
-using Application.Commons.Repositories;
+using Infra.Data.Repositories;
 
 namespace Application.Handlers.WeatherForecast.GetWeatherHandler;
 
@@ -8,7 +8,7 @@ public class GetWeatherHandler(IWeatherForecastRepository repository) : IRequest
 {        
     public async Task<IResult> Handle(GetWeatherCommand request, CancellationToken cancellationToken)
     {
-        var forecasts = await repository.GetAll();
+        var forecasts = await repository.Get();
 
         if (forecasts == null)
         {
@@ -17,7 +17,7 @@ public class GetWeatherHandler(IWeatherForecastRepository repository) : IRequest
 
         if (request.IsGetById)
         {
-            forecasts = forecasts.Where(forecast => forecast.Id == request.Id);
+            forecasts = forecasts.Where(forecast => forecast.Id == request.Id.ToString());
         }
 
         if (!forecasts.Any())

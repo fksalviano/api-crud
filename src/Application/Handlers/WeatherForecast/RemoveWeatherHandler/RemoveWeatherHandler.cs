@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using MediatR;
-using Application.Commons.Repositories;
+using Infra.Data.Repositories;
 
 namespace Application.Handlers.WeatherForecast.RemoveWeatherHandler;
 
@@ -14,6 +14,11 @@ public class RemoveWeatherHandler(IWeatherForecastRepository repository) : IRequ
         {
             return Results.Problem("Error to Remove Forecasts");
         }
+
+        if (!forecastRemoved.Value)
+        {
+            return Results.Problem("Id not found to delete");
+        }        
 
         return Results.NoContent();
     }

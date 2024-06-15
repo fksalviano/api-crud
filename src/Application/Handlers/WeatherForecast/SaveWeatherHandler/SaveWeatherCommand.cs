@@ -9,19 +9,19 @@ public class SaveWeatherCommand : IRequest<IResult>
     public int TemperatureC { get; set; }
     public string? Summary { get; set; }
 
-    private int? Id { get; set; }
+    private Guid? Id { get; set; }
     public bool IsUpdate() => Id is not null;
-    public int? GetId() => Id;
+    public Guid? GetId() => Id;
 
-    public SaveWeatherCommand WithId(int value)
+    public SaveWeatherCommand WithId(Guid value)
     { 
         this.Id = value;
         return this;
     }
 
-    public Domain.WeatherForecast ToForecast(int nextId = int.MaxValue) => new()
+    public Domain.Model.WeatherForecast ToForecast() => new()
     {
-        Id = this.Id ?? nextId,
+        Id = this.Id?.ToString() ?? Guid.NewGuid().ToString(),
         Date = this.Date,
         TemperatureC = this.TemperatureC,
         Summary = this.Summary
