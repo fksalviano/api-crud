@@ -1,6 +1,6 @@
 using Application.Handlers.WeatherForecast.GetWeatherHandler;
-using Infra.Data.Repositories;
-using Domain.Model;
+using Infrastructure.Repositories;
+using Domain.Models;
 using AutoFixture;
 using FluentAssertions;
 using Moq;
@@ -27,7 +27,7 @@ public class GetWeatherForecastUseCaseTests
     public async Task ShouldExecuteSuccessfully()
     {
         //Arrange
-        var command =  _fixture.Create<GetWeatherCommand>();
+        var command =  _fixture.Create<GetWeatherQuery>();
         var expected = _fixture.CreateMany<WeatherForecast>(5);
 
         _repository.Setup(repo => repo.Get()).ReturnsAsync(expected);
@@ -49,7 +49,7 @@ public class GetWeatherForecastUseCaseTests
     public async Task ShouldExecuteNotFound()
     {
         //Arrange
-        var command =  _fixture.Create<GetWeatherCommand>();
+        var command =  _fixture.Create<GetWeatherQuery>();
         var expected = _fixture.CreateMany<WeatherForecast>(0);
         _repository.Setup(repo => repo.Get()).ReturnsAsync(expected);
 
@@ -64,7 +64,7 @@ public class GetWeatherForecastUseCaseTests
     public async Task ShouldExecuteWithError()
     {
         //Arrange
-        var command =  _fixture.Create<GetWeatherCommand>();
+        var command =  _fixture.Create<GetWeatherQuery>();
         var expected = (IEnumerable<WeatherForecast>) null!;
         _repository.Setup(repo => repo.Get()).ReturnsAsync(expected);
 

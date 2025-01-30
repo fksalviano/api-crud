@@ -1,0 +1,28 @@
+###
+
+GET http://localhost:5253/api/weatherforecast
+
+
+###
+
+POST  http://localhost:5253/api/weatherforecast
+Content-Type: application/json
+
+{    
+    "date": "2024-06-09T15:05:02.9054233-03:00",
+    "temperatureC": 10,    
+    "summary": "Teste"   
+}
+
+###
+
+PUT  http://localhost:5253/api/weatherforecast/e54e5e68-c8f9-4b1a-967c-a920742197d1
+Content-Type: application/json
+
+{    
+    "date": "2024-06-09T15:05:02.9054233-03:00",
+    "temperatureC": 10,    
+    "summary": "Teste"   
+}
+
+###

@@ -1,4 +1,4 @@
-using Infra.Data.Repositories;
+using Infrastructure.Repositories;
 using FluentAssertions;
 using Moq.AutoMock;
 
