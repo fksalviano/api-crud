@@ -1,9 +1,11 @@
+using Application.Behaviors;
+using Application.Mappers;
+using Domain.Extensions;
+using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
-using FluentValidation;
-using Application.Mappers;
-using Application.Handlers.WeatherForecast.SaveWeatherHandler;
+
 
 namespace Application.Installers;
 
@@ -15,16 +17,24 @@ public static class ApplicationInstaller
         services
             .AddMediatR(configuration => configuration
                 .RegisterServicesFromAssembly(Assembly.GetExecutingAssembly())
-                .AddOpenBehavior(typeof(RequestValidationBehavior<,>), ServiceLifetime.Scoped));
-
-        services            
-            .AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies(), ServiceLifetime.Scoped);
+                .AddOpenBehavior(typeof(RequestValidationBehavior<,>)));
 
         services
-            .AddAutoMapper(
-                typeof(ModelProfile));
+            .AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies())
+            .AddDomainValidation();
 
-        return services;    
+        services
+            .AddAutoMapper(typeof(ModelProfile));
+
+        return services;
+    }
+
+    private static IServiceCollection AddDomainValidation(this IServiceCollection services)
+    {
+        var serviceProvider = services.BuildServiceProvider();
+        ValidationsExtension.SetProvider(serviceProvider);
+        
+        return services;
     }
 
 }

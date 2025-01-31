@@ -1,4 +1,8 @@
+using System.Reflection;
+using Dapper;
+using Domain.Models;
 using Infrastructure.Database;
+using Infrastructure.Database.Mappers;
 using Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,8 +14,14 @@ public static class InfrastructureInstaller
     {
         services.AddDatabase();
 
+        services
+            .AddScoped<WeatherForecastMapper>();
+
+        DapperExtensions.DapperExtensions.DefaultMapper = typeof(CustomPluralizedMapper<>);
+        DapperExtensions.DapperExtensions.SetMappingAssemblies([ Assembly.GetExecutingAssembly() ]);        
+
         services            
-            .AddScoped<IWeatherForecastRepository, WeatherForecastRepository>();
+            .AddScoped<IWeatherForecastRepository, WeatherForecastRepository>();    
 
         return services;
     }

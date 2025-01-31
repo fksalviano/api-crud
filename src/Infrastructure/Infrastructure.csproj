@@ -9,9 +9,9 @@
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.35" />
     <PackageReference Include="DapperExtensions" Version="1.7.0" />
-    <PackageReference Include="System.Data.SQLite" Version="1.0.118" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0-preview.4.24266.19" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.0-preview.4.24266.19 " />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.119" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.1" />
   </ItemGroup>
 
   <ItemGroup>

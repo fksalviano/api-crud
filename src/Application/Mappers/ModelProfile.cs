@@ -9,7 +9,7 @@ public class ModelProfile : Profile
 {
     public ModelProfile()
     {
-        CreateMap<SaveWeatherCommand, WeatherForecast>();                
-        CreateMap<WeatherForecast, WeatherForecastResponse>();
+        CreateMap<SaveWeatherCommand, WeatherForecastModel>();                
+        CreateMap<WeatherForecastModel, WeatherForecastResponse>();
     }
 }

@@ -19,6 +19,7 @@ public class GetWeatherHandler(IWeatherForecastRepository repository, IMapper ma
                 return NotFound();
 
             var response = mapper.Map<WeatherForecastResponse>(forecast);
+            
             return Ok(response);
         }
         else
@@ -32,6 +33,7 @@ public class GetWeatherHandler(IWeatherForecastRepository repository, IMapper ma
                 return NotFound();            
             
             var response = mapper.Map<IEnumerable<WeatherForecastResponse>>(forecasts);
+
             return Ok(response);
         }
     }

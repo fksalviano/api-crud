@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using static Microsoft.AspNetCore.Http.Results;
 
-namespace Application.Handlers.WeatherForecast.SaveWeatherHandler;
+namespace Application.Behaviors;
 
 public class RequestValidationBehavior<TRequest, TResponse>(IServiceProvider serviceProvider) : IPipelineBehavior<TRequest, IResult> where TRequest : notnull
 {

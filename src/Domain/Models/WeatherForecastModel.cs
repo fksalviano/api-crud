@@ -1,6 +1,6 @@
 namespace Domain.Models;
 
-public class WeatherForecast
+public class WeatherForecastModel
 {
     public string Id { get => _id.ToString(); }
     public DateTime Date { get; }
@@ -10,7 +10,7 @@ public class WeatherForecast
     private Guid _id;
     public void SetNewId() => _id = Guid.NewGuid();
 
-    public WeatherForecast(string id, DateTime date, int temperatureC, string? summary)
+    public WeatherForecastModel(string id, DateTime date, int temperatureC, string? summary)
     {
         _id = Guid.TryParse(id, out var guid) ? guid : Guid.Empty;
         Date = date;

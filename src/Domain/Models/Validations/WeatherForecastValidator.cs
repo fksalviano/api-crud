@@ -3,7 +3,7 @@ using Domain.Models;
 
 namespace Domain.Models.Validations;
 
-public class WeatherForecastValidator : AbstractValidator<WeatherForecast>
+public class WeatherForecastValidator : AbstractValidator<WeatherForecastModel>
 {
     public WeatherForecastValidator()
     {        

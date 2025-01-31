@@ -1,5 +1,6 @@
 using AutoMapper;
 using Domain.Responses.WeatherForecast;
+using Domain.Extensions;
 using Infrastructure.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -11,21 +12,33 @@ public class SaveWeatherHandler(IWeatherForecastRepository repository, IMapper m
 {
     public async Task<IResult> Handle(SaveWeatherCommand request, CancellationToken cancellationToken)
     {
-        var forecast = mapper.Map<Domain.Models.WeatherForecast>(request);
+        var forecast = mapper.Map<Domain.Models.WeatherForecastModel>(request);
 
         if (request.Id is null)
         {
             forecast.SetNewId();
+
+            if (!forecast.IsValid(out var error))
+            {
+                return BadRequest(error);
+            }
+
             var forecastSaved = await repository.Create(forecast);
 
             if (forecastSaved == null || !forecastSaved.Value)
                 return Problem("Error to save Forecast");
 
             var response = mapper.Map<WeatherForecastResponse>(forecast);
+
             return Created(forecast.Id, response);
         }
         else
         {
+            if (!forecast.IsValid(out var error))
+            {
+                return BadRequest(error);
+            }
+            
             var forecastUpdated = await repository.Update(forecast);
 
             if (forecastUpdated == null)
@@ -35,6 +48,7 @@ public class SaveWeatherHandler(IWeatherForecastRepository repository, IMapper m
                 return NotFound("Id not found to update Forecast");
 
             var response = mapper.Map<WeatherForecastResponse>(forecast);
+            
             return Accepted(forecast.Id, response);
         }
     }

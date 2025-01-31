@@ -28,7 +28,7 @@ public class GetWeatherForecastUseCaseTests
     {
         //Arrange
         var command =  _fixture.Create<GetWeatherQuery>();
-        var expected = _fixture.CreateMany<WeatherForecast>(5);
+        var expected = _fixture.CreateMany<WeatherForecastModel>(5);
 
         _repository.Setup(repo => repo.Get()).ReturnsAsync(expected);
 
@@ -36,10 +36,10 @@ public class GetWeatherForecastUseCaseTests
         var result = await _sut.Handle(command, default);
 
         //Assert
-        result.Should().BeOfType<Ok<IEnumerable<WeatherForecast>>>();
+        result.Should().BeOfType<Ok<IEnumerable<WeatherForecastModel>>>();
     }
 
-    private bool IsEquivalent(IEnumerable<WeatherForecast> source, IEnumerable<WeatherForecast> expected)
+    private bool IsEquivalent(IEnumerable<WeatherForecastModel> source, IEnumerable<WeatherForecastModel> expected)
     {
         source.Should().BeEquivalentTo(expected);
         return true;
@@ -50,14 +50,14 @@ public class GetWeatherForecastUseCaseTests
     {
         //Arrange
         var command =  _fixture.Create<GetWeatherQuery>();
-        var expected = _fixture.CreateMany<WeatherForecast>(0);
+        var expected = _fixture.CreateMany<WeatherForecastModel>(0);
         _repository.Setup(repo => repo.Get()).ReturnsAsync(expected);
 
         //Act
         var result = await _sut.Handle(command, default);
 
         //Assert
-        result.Should().BeOfType<Ok<IEnumerable<WeatherForecast>>>();
+        result.Should().BeOfType<Ok<IEnumerable<WeatherForecastModel>>>();
     }
 
     [Fact]
@@ -65,7 +65,7 @@ public class GetWeatherForecastUseCaseTests
     {
         //Arrange
         var command =  _fixture.Create<GetWeatherQuery>();
-        var expected = (IEnumerable<WeatherForecast>) null!;
+        var expected = (IEnumerable<WeatherForecastModel>) null!;
         _repository.Setup(repo => repo.Get()).ReturnsAsync(expected);
 
         //Act

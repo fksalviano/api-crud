@@ -1,18 +1,18 @@
 using Microsoft.Extensions.Logging;
 using System.Data;
 using Domain.Models;
-using Dapper;
 using DapperExtensions;
+using Infrastructure.Database.Mappers;
 
 namespace Infrastructure.Repositories;
 
 public class WeatherForecastRepository(ILogger<WeatherForecastRepository> logger, IDbConnection connection) : IWeatherForecastRepository
 {    
-    public async Task<IEnumerable<WeatherForecast>?> Get()
+    public async Task<IEnumerable<WeatherForecastModel>?> Get()
     {
         try
         {
-            return await connection.GetListAsync<WeatherForecast>();
+            return await connection.GetListAsync<WeatherForecastModel>();
         }
         catch (Exception ex)
         {
@@ -21,11 +21,11 @@ public class WeatherForecastRepository(ILogger<WeatherForecastRepository> logger
         }
     }
 
-    public async Task<WeatherForecast?> Get(Guid id)
+    public async Task<WeatherForecastModel?> Get(Guid id)
     {
         try
         {
-            return await connection.GetAsync<WeatherForecast>(id.ToString());
+            return await connection.GetAsync<WeatherForecastModel>(id.ToString());
         }
         catch (Exception ex)
         {
@@ -34,7 +34,7 @@ public class WeatherForecastRepository(ILogger<WeatherForecastRepository> logger
         }
     }
 
-    public async Task<bool?> Create(WeatherForecast weatherforecast)
+    public async Task<bool?> Create(WeatherForecastModel weatherforecast)
     {
         try
         {
@@ -48,7 +48,7 @@ public class WeatherForecastRepository(ILogger<WeatherForecastRepository> logger
         }        
     }
 
-    public async Task<bool?> Update(WeatherForecast weatherforecast)
+    public async Task<bool?> Update(WeatherForecastModel weatherforecast)
     {
         try
         {
@@ -61,7 +61,7 @@ public class WeatherForecastRepository(ILogger<WeatherForecastRepository> logger
         }
     }
 
-    public async Task<bool?> Delete(WeatherForecast weatherforecast)
+    public async Task<bool?> Delete(WeatherForecastModel weatherforecast)
     {
         try
         {            

@@ -4,9 +4,9 @@ namespace Infrastructure.Repositories;
 
 public interface IWeatherForecastRepository
 {
-    Task<IEnumerable<WeatherForecast>?> Get();
-    Task<WeatherForecast?> Get(Guid id);
-    Task<bool?> Create(WeatherForecast weatherforecast);
-    Task<bool?> Update(WeatherForecast weatherforecast);
-    Task<bool?> Delete(WeatherForecast weatherforecast);
+    Task<IEnumerable<WeatherForecastModel>?> Get();
+    Task<WeatherForecastModel?> Get(Guid id);
+    Task<bool?> Create(WeatherForecastModel weatherforecast);
+    Task<bool?> Update(WeatherForecastModel weatherforecast);
+    Task<bool?> Delete(WeatherForecastModel weatherforecast);
 }

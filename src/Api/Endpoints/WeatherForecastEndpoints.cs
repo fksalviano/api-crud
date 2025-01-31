@@ -28,12 +28,12 @@ public static class WeatherForcastEndpoints
             group.MapPost("/", (IMediator mediator, SaveWeatherRequest request) => mediator.Send(new SaveWeatherCommand(request)))
                 .WithDisplayName("Save Forecast").WithDescription("Save weather forecasts")
                 .ProducesResponse<WeatherForecastResponse>(Created)
-                .ProducesResponse<string[]>(BadRequest);
+                .ProducesResponse(BadRequest);
 
             group.MapPut("/{id}", (IMediator mediator, Guid id, SaveWeatherRequest request) => mediator.Send(new SaveWeatherCommand(request, id)))
                 .WithDisplayName("Update Forecast").WithDescription("Update weather forecast")
                 .ProducesResponse<WeatherForecastResponse>(Accepted)
-                .ProducesResponse<string[]>(BadRequest)
+                .ProducesResponse(BadRequest)
                 .ProducesResponse(NotFound);
 
             group.MapDelete("/{id}", (IMediator mediator, Guid id) => mediator.Send(new RemoveWeatherCommand(id)))
