@@ -3,7 +3,6 @@ using Application.Handlers.WeatherForecast.GetWeatherHandler;
 using Application.Handlers.WeatherForecast.SaveWeatherHandler;
 using Application.Handlers.WeatherForecast.RemoveWeatherHandler;
 using MediatR;
-using Domain.Models;
 using Domain.Requests;
 using Domain.Responses.WeatherForecast;
 
