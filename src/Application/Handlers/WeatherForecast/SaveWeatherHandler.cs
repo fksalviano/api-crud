@@ -1,18 +1,20 @@
+using Application.Handlers.WeatherForecast.Requests;
 using AutoMapper;
-using Domain.Responses.WeatherForecast;
+using Domain.Models;
 using Domain.Extensions;
+using Domain.Entities;
 using Infrastructure.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using static Microsoft.AspNetCore.Http.Results;
 
-namespace Application.Handlers.WeatherForecast.SaveWeatherHandler;
+namespace Application.Handlers.WeatherForecast;
 
-public class SaveWeatherHandler(IWeatherForecastRepository repository, IMapper mapper) : IRequestHandler<SaveWeatherCommand, IResult>
+public class SaveWeatherHandler(IWeatherForecastRepository repository, IMapper mapper) : IRequestHandler<SaveWeatherRequest, IResult>
 {
-    public async Task<IResult> Handle(SaveWeatherCommand request, CancellationToken cancellationToken)
+    public async Task<IResult> Handle(SaveWeatherRequest request, CancellationToken cancellationToken)
     {
-        var forecast = mapper.Map<Domain.Models.WeatherForecastModel>(request);
+        var forecast = mapper.Map<WeatherForecastEntity>(request);
 
         if (request.Id is null)
         {
@@ -28,7 +30,7 @@ public class SaveWeatherHandler(IWeatherForecastRepository repository, IMapper m
             if (forecastSaved == null || !forecastSaved.Value)
                 return Problem("Error to save Forecast");
 
-            var response = mapper.Map<WeatherForecastResponse>(forecast);
+            var response = mapper.Map<WeatherForecastModel>(forecast);
 
             return Created(forecast.Id, response);
         }
@@ -47,7 +49,7 @@ public class SaveWeatherHandler(IWeatherForecastRepository repository, IMapper m
             if (!forecastUpdated.Value)
                 return NotFound("Id not found to update Forecast");
 
-            var response = mapper.Map<WeatherForecastResponse>(forecast);
+            var response = mapper.Map<WeatherForecastModel>(forecast);
             
             return Accepted(forecast.Id, response);
         }

@@ -1,13 +1,14 @@
+using Application.Handlers.WeatherForecast.Requests;
 using Infrastructure.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using static Microsoft.AspNetCore.Http.Results;
 
-namespace Application.Handlers.WeatherForecast.RemoveWeatherHandler;
+namespace Application.Handlers.WeatherForecast;
 
-public class RemoveWeatherHandler(IWeatherForecastRepository repository) : IRequestHandler<RemoveWeatherCommand, IResult>
+public class RemoveWeatherHandler(IWeatherForecastRepository repository) : IRequestHandler<RemoveWeatherRequest, IResult>
 {
-    public async Task<IResult> Handle(RemoveWeatherCommand request, CancellationToken cancellationToken)
+    public async Task<IResult> Handle(RemoveWeatherRequest request, CancellationToken cancellationToken)
     {
         var forecast = await repository.Get(request.Id);
 

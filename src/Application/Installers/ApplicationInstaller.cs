@@ -24,7 +24,7 @@ public static class ApplicationInstaller
             .AddDomainValidation();
 
         services
-            .AddAutoMapper(typeof(ModelProfile));
+            .AddAutoMapper(typeof(EntityToModelProfile));
 
         return services;
     }

@@ -1,10 +1,7 @@
-using static System.Net.HttpStatusCode;
-using Application.Handlers.WeatherForecast.GetWeatherHandler;
-using Application.Handlers.WeatherForecast.SaveWeatherHandler;
-using Application.Handlers.WeatherForecast.RemoveWeatherHandler;
+using Application.Handlers.WeatherForecast.Requests;
 using MediatR;
-using Domain.Requests;
-using Domain.Responses.WeatherForecast;
+using Domain.Models;
+using static System.Net.HttpStatusCode;
 
 namespace Api.Endpoints;
 
@@ -14,28 +11,28 @@ public static class WeatherForcastEndpoints
 
         app.MapGroup("WeatherForecast", "/api/weatherforecast", group =>
         {
-            group.MapGet("/", (IMediator mediator) => mediator.Send(new GetWeatherQuery()))
+            group.MapGet("/", (IMediator mediator) => mediator.Send(new GetWeatherRequest()))
                 .WithDisplayName("Get Forecasts").WithDescription("Get weather forecasts")
-                .ProducesResponse<IEnumerable<WeatherForecastResponse>>(OK)
+                .ProducesResponse<IEnumerable<WeatherForecastModel>>(OK)
                 .ProducesResponse(NotFound);
 
-            group.MapGet("/{id}", (IMediator mediator, Guid id) => mediator.Send(new GetWeatherQuery(id)))
+            group.MapGet("/{id}", (IMediator mediator, Guid id) => mediator.Send(new GetWeatherRequest(id)))
                 .WithDisplayName("Get Forecast").WithDescription("Get weather forecasts by Id")
-                .ProducesResponse<WeatherForecastResponse>(OK)
+                .ProducesResponse<WeatherForecastModel>(OK)
                 .ProducesResponse(NotFound);
 
-            group.MapPost("/", (IMediator mediator, SaveWeatherRequest request) => mediator.Send(new SaveWeatherCommand(request)))
+            group.MapPost("/", (IMediator mediator, SaveWeatherRequest request) => mediator.Send(request))
                 .WithDisplayName("Save Forecast").WithDescription("Save weather forecasts")
-                .ProducesResponse<WeatherForecastResponse>(Created)
+                .ProducesResponse<WeatherForecastModel>(Created)
                 .ProducesResponse(BadRequest);
 
-            group.MapPut("/{id}", (IMediator mediator, Guid id, SaveWeatherRequest request) => mediator.Send(new SaveWeatherCommand(request, id)))
+            group.MapPut("/{id}", (IMediator mediator, Guid id, SaveWeatherRequest request) => mediator.Send(request.SetId(id)))
                 .WithDisplayName("Update Forecast").WithDescription("Update weather forecast")
-                .ProducesResponse<WeatherForecastResponse>(Accepted)
+                .ProducesResponse<WeatherForecastModel>(Accepted)
                 .ProducesResponse(BadRequest)
                 .ProducesResponse(NotFound);
 
-            group.MapDelete("/{id}", (IMediator mediator, Guid id) => mediator.Send(new RemoveWeatherCommand(id)))
+            group.MapDelete("/{id}", (IMediator mediator, Guid id) => mediator.Send(new RemoveWeatherRequest(id)))
                 .WithDisplayName("Delete Forecast").WithDescription("Delete weather forecast")
                 .ProducesResponse(NoContent)
                 .ProducesResponse(NotFound);

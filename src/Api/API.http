@@ -1,6 +1,6 @@
 ###
 
-GET http://localhost:5253/api/weatherforecast
+GET http://localhost:5253/api/weatherforecast/1ae71318-fa78-428d-b4f6-436e6753f27c
 
 
 ###
