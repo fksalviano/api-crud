@@ -1,9 +1,7 @@
 using Microsoft.Extensions.Logging;
 using System.Data;
 using Domain.Entities;
-using Dapper;
 using DapperExtensions;
-using Infrastructure.Database.Mappers;
 
 namespace Infrastructure.Repositories;
 
@@ -13,10 +11,7 @@ public class WeatherForecastRepository(ILogger<WeatherForecastRepository> logger
     {
         try
         {
-            // TODO: Checar como usar  Dapper.Extensions propriedades readonly, usando o constructor para mapear
-            // return await connection.GetListAsync<WeatherForecastEntity>();
-            
-            return await connection.QueryAsync<WeatherForecastEntity>("select * from WeatherForecast");
+            return await connection.GetListAsync<WeatherForecastEntity>();                    
         }
         catch (Exception ex)
         {
@@ -28,11 +23,8 @@ public class WeatherForecastRepository(ILogger<WeatherForecastRepository> logger
     public async Task<WeatherForecastEntity?> Get(Guid id)
     {
         try
-        {
-            // TODO: Checar como usar  Dapper.Extensions propriedades readonly, usando o constructor para mapear
-            //return await connection.GetAsync<WeatherForecastEntity>(id.ToString());
-
-            return await connection.QueryFirstOrDefaultAsync<WeatherForecastEntity>($"select * from WeatherForecast where Id = @id", new { id = id.ToString() });
+        {            
+            return await connection.GetAsync<WeatherForecastEntity>(id.ToString());            
         }
         catch (Exception ex)
         {
